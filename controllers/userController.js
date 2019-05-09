@@ -10,6 +10,11 @@ exports.auth_get = function(req, res) {
     res.render('authentify');
 };
 
+exports.auth_deco = function(req, res) {
+    req.session.destroy();
+    res.render('authentify');
+};
+
 exports.auth_post =
     [
     body('username', 'Username required').isLength({ min: 1 }).trim(),
