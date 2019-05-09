@@ -1,0 +1,34 @@
+{{#if errors}}
+    <div class="alert alert-danger" role="alert">
+    <h2>Erreurs</h2>
+
+        <ul>
+            {{#each errors}}
+                <li> {{this.msg}} </li>
+            {{/each}}
+        </ul>
+
+    </div>
+{{/if}}
+
+<div class="container-fluid">
+    <form action="/auth" method="post">
+        <div class="form-group">
+            <label for="username">Nom d'utilisateur</label>
+            <input type="string" class="form-control" name="username" aria-describedby="usernameHelp" placeholder="Enter username">
+            <!--<small id="usernameHelp" class="form-text text-muted">Username is usually p.nom</small>-->
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" name="password" placeholder="password">
+        </div>
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="checkout">
+            <label class="form-check-label" for="checkout">Check me out</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+
+

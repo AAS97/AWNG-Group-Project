@@ -1,0 +1,80 @@
+<div class="row">
+    <div class="col-sm-2">
+        <h2>About Me</h2>
+        <h5>Photo of me:</h5>
+        <div class="fakeimg"></div>
+    </div>
+    <div class="col-sm-8">
+        <h1>{{object.name}}</h1>
+        <div class="container-fluid">
+            <h2>Task's details</h2>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Project</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Start date</th>
+                    <th scope="col">Due date</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+
+                        <td> <a href="/task/{{task._id}}">{{task.name}}</a></td>
+                        <td>{{task.description}}</td>
+                        <td><a href="/project/{{task.project._id}}">{{task.project.name}}</a></td>
+                        <td>{{task.status.name}}</td>
+                        <td>{{task.start_date}}</td>
+                        <td>{{task.due_date}}</td>
+
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="container-fluid">
+            <h2>Task's history</h2>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Author</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Entry</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                {{#each history}}
+
+                    <tr>
+                        <td>{{this.author.name}} {{this.author.lastname}}</td>
+                        <td>{{this.date}}</td>
+                        <td>{{this.entry}}</td>
+                    </tr>
+
+                {{/each}}
+
+                </tbody>
+            </table>
+
+            <div class="container-fluid">
+                <form action="" method="post">
+
+                    <div class="form-group">
+                        <label for="entry">Your message</label>
+                        <input type="string" class="form-control" name="entry" placeholder="Enter your message">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+

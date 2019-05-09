@@ -1,0 +1,56 @@
+<div class="row">
+    <div class="col-sm-2">
+        <h2>About Me</h2>
+        <h5>Photo of me:</h5>
+        <div class="fakeimg"></div>
+    </div>
+    <div class="col-sm-8">
+        <div class="container-fluid">
+            <h2>{{object.name}}</h2>
+            <h2>Enter new task's information</h2>
+
+            <form action="" method="post">
+
+                <div class="form-group">
+                    <label for="task_name">Name of the task</label>
+                    <input type="string" class="form-control" name="task_name" placeholder="Enter new task's name">
+                </div>
+
+                <div class="form-group">
+                    <label for="task_descr">Description of the task</label>
+                    <input type="string" class="form-control" name="task_descr" placeholder="Enter new task's description">
+                </div>
+
+                <div class="form-group">
+                    <label for="assignee">Assigned to:</label>
+                    <select class="form-control" name="assignee" id="assignee">
+                        {{# each object.members}}
+                            <option>{{this.firstname}} {{this.name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="start_date">Start date</label>
+                    <input type="date" class="form-control" name="start_date" placeholder="Enter start date">
+                </div>
+
+                <div class="form-group">
+                    <label for="due_date">Due date</label>
+                    <input type="date" class="form-control" name="due_date" placeholder="Enter due date">
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select class="form-control" name="status" id="status">
+                        {{# each status}}
+                            <option>{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>

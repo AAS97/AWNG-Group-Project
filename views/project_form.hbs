@@ -1,0 +1,35 @@
+<div class="row">
+<div class="col-sm-2">
+    <h2>About Me</h2>
+    <h5>Photo of me:</h5>
+    <div class="fakeimg"></div>
+</div>
+<div class="col-sm-8">
+    <div class="container-fluid">
+
+        <h2>Enter new project's information</h2>
+
+        <form action="/project/add" method="post">
+
+            <div class="form-group">
+                <label for="project_name">Nom du projet</label>
+                <input type="string" class="form-control" name="project_name" aria-describedby="usernameHelp" placeholder="Enter new project name">
+                <!--<small id="usernameHelp" class="form-text text-muted">Username is usually p.nom</small>-->
+            </div>
+
+            <div class="form-group">
+                <label for="members">Select list:</label>
+                <select multiple class="form-control" name="members" id="members">
+                    {{# each members}}
+                    <option>{{this.firstname}} {{this.name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+</div>
+
+
