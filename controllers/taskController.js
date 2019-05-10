@@ -31,6 +31,26 @@ exports.getUserTasks = async function(req, res){
 
 };
 
+exports.getOtherUserTasks = async function(req, res){
+    var tasks = await taskModel.find({assignee : {$ne: req.session.user_id}})
+        .populate({path : 'assignee', model: userModel, select : 'firstname name'})
+        .populate({path : 'project', model : projectModel, select :'name'})
+        .populate({path: 'status', model : statusModel})
+        .catch(function (err) {
+            console.log(err);
+            res.render('error', {message : 'erreur getting projects', error : err});
+        });
+
+    for (var j = 0; j < tasks.length; j++){
+        tasks[j].formatted_start_date = await moment(tasks[j].start_date).format('YYYY-MM-DD');
+        tasks[j].formatted_due_date = await moment(tasks[j].due_date).format('YYYY-MM-DD');
+    }
+
+    return(tasks);
+
+};
+
+
 exports.getUserFinishedTasks = async function(req, res){
     var status  = await statusModel.findOne({name : 'Terminé'})
         .catch(function (err) {
@@ -45,6 +65,11 @@ exports.getUserFinishedTasks = async function(req, res){
             console.log(err);
             res.render('error', {message : 'error getting finished tasks', error : err});
         });
+
+    for (var j = 0; j < tasks.length; j++){
+        tasks[j].formatted_start_date = await moment(tasks[j].start_date).format('YYYY-MM-DD');
+        tasks[j].formatted_due_date = await moment(tasks[j].due_date).format('YYYY-MM-DD');
+    }
     return(tasks);
 
 };
