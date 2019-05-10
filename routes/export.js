@@ -27,23 +27,18 @@ router.post('/', urlEncodedParser, async function(req,res) {
         if (req.body.projects == "projects"){
 
             exportController.exportToCsv(req,res,projectModel,projectFields,"projects");
-            console.log("1");
 
         } if (req.body.users == "users") {
 
             exportController.exportToCsv(req,res,userModel,userFields,"users");
-            console.log("2");
 
         } if (req.body.tasks == "tasks") {
-            console.log("3");
             exportController.exportToCsv(req,res,taskModel,taskFields,"tasks");
 
         } if (req.body.statuses == "statuses") {
-            console.log("4");
             exportController.exportToCsv(req, res, statusModel, statusFields,"statuses");
 
         } if (req.body.journals == "journals") {
-            console.log("5");
             exportController.exportToCsv(req,res,journalModel,journalFields,"journals");
 
         }
