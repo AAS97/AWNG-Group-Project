@@ -71,10 +71,12 @@ exports.get_home = async function(req, res) {
     var projects = await projectController.getUserProjects(req,res);
     var mytasks = await taskController.getUserTasks(req,res);
     var myfinishedtasks = await taskController.getUserFinishedTasks(req,res);
+    var othersUsersTasks = await taskController.getOtherUserTasks(req,res);
 
 
 
-    res.render('dashboard',{projects: projects, mytasks: mytasks, myfinishedtasks: myfinishedtasks, myprojectstasks: mytasks, othersprojectstasks: mytasks});
+
+    res.render('dashboard',{projects: projects, mytasks: mytasks, myfinishedtasks: myfinishedtasks, othersUsersTasks: othersUsersTasks});
 
 };
 
