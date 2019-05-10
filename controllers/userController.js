@@ -96,4 +96,3 @@ exports.getUserId = async function([firstname, name]){
 };
 
 
-//test

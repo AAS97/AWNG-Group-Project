@@ -1,12 +1,15 @@
+
+
 var taskModel = require('../models/taskModel');
 var userModel = require('../models/userModel');
 var statusModel = require('../models/statusModel');
 var projectModel = require('../models/projectModel');
 
-var moment = require('moment');
 
 var journalController = require('../controllers/journalController');
 var userController = require('../controllers/userController');
+
+var moment = require('moment');
 
 // return list of projects in which logged user is implied
 exports.getUserTasks = async function(req, res){
@@ -16,7 +19,7 @@ exports.getUserTasks = async function(req, res){
         .populate({path: 'status', model : statusModel})
         .catch(function (err) {
                 console.log(err);
-                res.render('error', {message : 'erreur getting projects', error : err});
+                res.render('error', {message : 'error getting all user tasks', error : err});
         });
 
     for (var j = 0; j < tasks.length; j++){
@@ -40,7 +43,7 @@ exports.getUserFinishedTasks = async function(req, res){
         .populate({path: 'status', model : statusModel})
         .catch(function (err) {
             console.log(err);
-            res.render('error', {message : 'erreur getting projects', error : err});
+            res.render('error', {message : 'error getting finished tasks', error : err});
         });
     return(tasks);
 
@@ -52,7 +55,7 @@ exports.getProjectTasks = async function(req, res){
         .populate({path: 'status', model : statusModel})
         .catch(function (err) {
                 console.log(err);
-                res.render('error', {message : 'erreur getting tasks', error : err});
+                res.render('error', {message : 'error getting project tasks', error : err});
         });
 
     for (var j = 0; j < tasks.length; j++){
@@ -72,7 +75,7 @@ exports.getTask = async function(req, res) {
         .populate({path: 'project', model : projectModel, select : 'name _id'})
         .catch(function (err) {
                 console.log(err);
-                res.render('error', {message : 'erreur getting task', error : err});
+                res.render('error', {message : 'error getting task', error : err});
         });
 
     task.formatted_start_date = await moment(task.start_date).format('YYYY-MM-DD');
@@ -84,34 +87,14 @@ exports.getTask = async function(req, res) {
     return ([task,journals]);
 
 };
-/*
-// return details about a project
-exports.getTask = function(req, res, callback) {
-    taskModel.findById(req.params.taskId)
-        .populate({path : 'assignee', model: userModel, select : 'firstname name'})
-        .populate({path: 'status', model : statusModel, select : 'name'})
-        .populate({path: 'project', model : projectModel, select : 'name _id'})
-        .exec(function (err, task) {
-            if (err) {
-                console.log(err);
-                res.render('error', {message : 'erreur getting task', error : err});
-            }else {
-                journalController.getTaskJournals(req, res, function(journals) {
-                    if (typeof callback == "function") {
-                        callback(task, journals);
-                    }
-                });
-            }
-        });
 
-};
-*/
+
 exports.addNewTask = async function(req, res){
     // create a new task object and save it on the db
     // is called by Post method
     var status = await statusModel.findOne({name : req.body.status})
         .catch(function(err) {
-            res.render('error', {message: 'erreur de recherche de status dans la base de donnée', error: err});
+            res.render('error', {message: 'error on status search in database', error: err});
         });
     var split = req.body.assignee.split(' ');
     var userId = await userController.getUserId(split);
@@ -136,7 +119,7 @@ exports.editTask = async function(req, res){
     // is called by Post method
     var status = await statusModel.findOne({name : req.body.status})
         .catch(function(err) {
-            res.render('error', {message: 'erreur de recherche de status dans la base de donnée', error: err});
+            res.render('error', {message: 'error on status search in database', error: err});
         });
     var split = req.body.assignee.split(' ');
     var userId = await userController.getUserId(split);
@@ -158,12 +141,20 @@ exports.editTask = async function(req, res){
 
 };
 
+exports.deleteTask = async function(req, res) {
+    await taskModel.findByIdAndDelete(req.params.taskId)
+        .catch(function(err) {
+        res.render('error', {message: 'error on task deletion', error: err});
+    });
+
+};
+
 //return de status that a task can have
 exports.getAllStatus = async function(req, res) {
     var project = await projectModel.findById(req.params.projectId).populate({path : 'members', model: userModel, select : 'firstname name'})
         .catch(function (err) {
             console.log(err);
-            res.render('error', {message: 'erreur getting projects', error: err});
+            res.render('error', {message: 'error getting projects', error: err});
         });
     var status = await statusModel.find();
     return(status);

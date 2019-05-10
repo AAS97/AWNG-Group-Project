@@ -12,26 +12,28 @@
             <!--To Search by name task-->
             <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
 
-            <!-- To Search by person assignee-->
-            <div class="form-group">
-                <label for="assignee">Status:</label>
-                <select class="form-control" name="assignee" id="assignee"  onchange="myFunction2()" value = "">
-                        <option></option>
-                    {{# each users}}
-                        <option>{{this.firstname}} {{this.name}}</option>
-                    {{/each}}
-                </select>
-            </div>
+            <div class="row">
+                <!-- To Search by person assignee-->
+                <div class="form-group col-sm-2">
+                    <label for="assignee">Status:</label>
+                    <select class="form-control" name="assignee" id="assignee"  onchange="myFunction2()" value = "">
+                            <option></option>
+                        {{# each users}}
+                            <option>{{this.firstname}} {{this.name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
 
-            <!--To Search by Status-->
-            <div class="form-group">
-                <label for="status">Assigned to:</label>
-                <select class="form-control" name="status" id="status"  onchange="myFunction3()" value = "">
-                    <option></option>
-                    {{# each status}}
-                        <option>{{this.name}} </option>
-                    {{/each}}
-                </select>
+                <!--To Search by Status-->
+                <div class="form-group col-sm-2">
+                    <label for="status">Assigned to:</label>
+                    <select class="form-control" name="status" id="status"  onchange="myFunction3()" value = "">
+                        <option></option>
+                        {{# each status}}
+                            <option>{{this.name}} </option>
+                        {{/each}}
+                    </select>
+                </div>
             </div>
 
 
@@ -42,6 +44,7 @@
                     <th scope="col">Assigned to</th>
                     <th scope="col">Status</th>
                     <th scope="col">Edit task</th>
+                    <th scope="col">Delete task</th>
                 </tr>
                 </thead>
 
@@ -54,8 +57,8 @@
                         <td> <a href="/task/{{this._id}}">{{this.name}}</a></td>
                         <td>{{this.assignee.firstname}} {{this.assignee.name}}</td>
                         <td>{{this.status.name}}</td>
-                        <td><a href="/task/{{this._id}}/modify"><img src="https://img.icons8.com/metro/26/000000/edit-property.png"></a></td>
-
+                        <td><a href="/task/{{this._id}}/modify"><i class="fas fa-edit"></i></a></td>
+                        <td><a href="/task/{{this._id}}/delete"><i class="fas fa-trash-alt"></i></a></td>
                     </tr>
 
                 {{/each}}
