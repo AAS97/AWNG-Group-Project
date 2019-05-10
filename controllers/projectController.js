@@ -32,11 +32,11 @@ exports.getProject = async function(req, res) {
 // return the users assignees to the project
 exports.getProjectUsers = async function(req, res) {
     var project = await projectModel.findById(req.params.projectId).populate({path : 'members', model: userModel, select : 'firstname name'})
-        .catch(function (err) {
+            .catch(function (err) {
             console.log(err);
             res.render('error', {message: 'erreur getting users', error: err});
         });
-    var users = await userModel.find();
+    var users = project.members;
     console.log("Users"+ users);
     return(users);
 
