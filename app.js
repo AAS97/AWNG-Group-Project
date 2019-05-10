@@ -55,7 +55,7 @@ var usersRouter = require('./routes/users');
 var authRouter = require('./routes/auth');
 var projectRouter = require('./routes/project');
 var taskRouter = require('./routes/task');
-
+var exportRouteur = require('./routes/export');
 
 
 app.use('/', indexRouter);
@@ -63,6 +63,7 @@ app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 app.use('/project', projectRouter);
 app.use('/task', taskRouter);
+app.use('/export',exportRouteur);
 
 
 
