@@ -5,11 +5,10 @@ const moment = require('moment');
 const json2csv = require('json2csv').parse;
 const path = require('path');
 
-const journalModel = require('../models/journalModel');
-const projectModel = require('../models/projectModel');
-const statusModel = require('../models/statusModel');
-const taskModel = require('../models/taskModel');
-const usersModel = require('../models/userModel');
+
+
+
+
 
 exports.getExportPage = async function(req,res) {
 
@@ -17,18 +16,17 @@ exports.getExportPage = async function(req,res) {
 
 };
 
-exports.exportToCsv = async function(req,res) {
-    console.log("1");
+exports.exportToCsv = async function(req,res,model,fields,filename) {
+    var data = await model.find({}).exec();
     let csv;
     try {
-        csv =  json2csv(projectModel);
+        csv =  json2csv(data,{fields});
     } catch (err) {
-        console.log(csv);
-        return res.status.json({err});
+        return res.status(500).json({err});
 
     }
-    console.log("2");
-    fs.writeFile("../exports/database.csv",csv, async function(err) {
+    var myPath = path.join(__dirname,"..","exports",filename + ".csv");
+    fs.writeFile(myPath,csv, async function(err) {
 
         if (err) {
 
@@ -38,7 +36,6 @@ exports.exportToCsv = async function(req,res) {
 
 
         }
-        console.log("3");
     });
 
 };
