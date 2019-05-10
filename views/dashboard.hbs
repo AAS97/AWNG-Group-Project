@@ -108,7 +108,7 @@
 
                 <h1>Task lists of the project of your choice</h1>
 
-                <h3>My task of this project</h3>
+                <h3>My tasks of this project</h3>
 
                 <table id ="myTable" class="table table-hover">
                     <thead>
@@ -124,7 +124,7 @@
 
 
 
-                    {{#each projectstasks}}
+                    {{#each myprojectstasks}}
 
                         <tr>
 
@@ -139,6 +139,39 @@
 
                     </tbody>
                 </table>
+
+                <h3>Others tasks of this project</h3>
+
+                <table id ="myTable" class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Assigned to</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Edit task</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+
+
+
+                    {{#each othersprojectstasks}}
+
+                        <tr>
+
+                            <td> <a href="/task/{{this._id}}">{{this.name}}</a></td>
+                            <td>{{this.assignee.firstname}} {{this.assignee.name}}</td>
+                            <td>{{this.status.name}}</td>
+                            <td><a href="/task/{{this._id}}/modify"><img src="https://img.icons8.com/metro/26/000000/edit-property.png"></a></td>
+
+                        </tr>
+
+                    {{/each}}
+
+                    </tbody>
+                </table>
+
                 <a href="/project/{{object._id}}/add" class="btn btn-primary btn-lg active" role="button" aria-pressed="true" style="margin-bottom : 10px">Add new task to this project</a>
 
             </div>
