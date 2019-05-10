@@ -72,7 +72,8 @@ router.get('/:projectId',async function(req, res) {
     else {
         //display list of projects
         var [project, tasks] = await projectController.getProject(req,res);
-        res.render('project',{object : project, tasks : tasks});
+        var users = await projectController.getProjectUsers(req,res);
+        res.render('project',{object : project, tasks : tasks, users:users});
 
     }});
 
