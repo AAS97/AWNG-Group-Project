@@ -23,7 +23,8 @@
 
                 <div class="form-group">
                     <label for="assignee">Assigned to:</label>
-                    <select class="form-control" name="assignee" id="assignee" value="{{task.assignee.firstname}} {{task.assignee.name}}">
+                    <select class="form-control" name="assignee" id="assignee">
+                        <option selected="selected">{{task.assignee.firstname}} {{task.assignee.name}}</option>
                         {{# each project.members}}
                             <option>{{this.firstname}} {{this.name}}</option>
                         {{/each}}
@@ -32,17 +33,18 @@
 
                 <div class="form-group">
                     <label for="start_date">Start date</label>
-                    <input type="date" class="form-control" name="start_date" value="{{task.start_date}}" placeholder="Enter start date">
+                    <input type="date" class="form-control" name="start_date" value="{{task.formatted_start_date}}" placeholder="Enter start date">
                 </div>
 
                 <div class="form-group">
                     <label for="due_date">Due date</label>
-                    <input type="date" class="form-control" name="due_date" value="{{task.due_date}}" placeholder="Enter due date">
+                    <input type="date" class="form-control" name="due_date" value="{{task.formatted_due_date}}" placeholder="Enter due date">
                 </div>
 
                 <div class="form-group">
                     <label for="status">Status</label>
                     <select class="form-control" name="status" id="status" value="{{task.status.name}}">
+                        <option selected="selected">{{task.status.name}}</option>
                         {{# each status}}
                             <option>{{this.name}}</option>
                         {{/each}}

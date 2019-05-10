@@ -3,6 +3,8 @@ var userModel = require('../models/userModel');
 var statusModel = require('../models/statusModel');
 var projectModel = require('../models/projectModel');
 
+var moment = require('moment');
+
 var journalController = require('../controllers/journalController');
 var userController = require('../controllers/userController');
 
@@ -16,6 +18,12 @@ exports.getUserTasks = async function(req, res){
                 console.log(err);
                 res.render('error', {message : 'erreur getting projects', error : err});
         });
+
+    for (var j = 0; j < tasks.length; j++){
+        tasks[j].formatted_start_date = await moment(tasks[j].start_date).format('YYYY-MM-DD');
+        tasks[j].formatted_due_date = await moment(tasks[j].due_date).format('YYYY-MM-DD');
+    }
+
     return(tasks);
 
 };
@@ -46,7 +54,13 @@ exports.getProjectTasks = async function(req, res){
                 console.log(err);
                 res.render('error', {message : 'erreur getting tasks', error : err});
         });
-   return(tasks);
+
+    for (var j = 0; j < tasks.length; j++){
+        tasks[j].formatted_start_date = await moment(tasks[j].start_date).format('YYYY-MM-DD');
+        tasks[j].formatted_due_date = await moment(tasks[j].due_date).format('YYYY-MM-DD');
+    }
+
+    return(tasks);
 
 };
 
@@ -60,7 +74,12 @@ exports.getTask = async function(req, res) {
                 console.log(err);
                 res.render('error', {message : 'erreur getting task', error : err});
         });
+
+    task.formatted_start_date = await moment(task.start_date).format('YYYY-MM-DD');
+    task.formatted_due_date = await moment(task.due_date).format('YYYY-MM-DD');
+
     var journals = await journalController.getTaskJournals(req, res);
+
 
     return ([task,journals]);
 
