@@ -28,6 +28,24 @@ exports.getUserTasks = async function(req, res){
 
 };
 
+exports.getUserFinishedTasks = async function(req, res){
+    var status  = await statusModel.findOne({name : 'Terminé'})
+        .catch(function (err) {
+            console.log(err);
+            res.render('error', {message: 'erreur getting status', error: err});
+        });
+    var tasks = await taskModel.find({assignee : req.session.user_id, status: status._id})
+        .populate({path : 'assignee', model: userModel, select : 'firstname name'})
+        .populate({path : 'project', model : projectModel, select :'name'})
+        .populate({path: 'status', model : statusModel})
+        .catch(function (err) {
+            console.log(err);
+            res.render('error', {message : 'erreur getting projects', error : err});
+        });
+    return(tasks);
+
+};
+
 exports.getProjectTasks = async function(req, res){
    var tasks = await taskModel.find({project : req.params.projectId})
         .populate({path : 'assignee', model: userModel, select : 'firstname name'})
@@ -137,5 +155,17 @@ exports.editTask = async function(req, res){
     task.assignee = userId;
 
     task.save();
+
+};
+
+//return de status that a task can have
+exports.getAllStatus = async function(req, res) {
+    var project = await projectModel.findById(req.params.projectId).populate({path : 'members', model: userModel, select : 'firstname name'})
+        .catch(function (err) {
+            console.log(err);
+            res.render('error', {message: 'erreur getting projects', error: err});
+        });
+    var status = await statusModel.find();
+    return(status);
 
 };
