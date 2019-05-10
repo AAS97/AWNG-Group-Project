@@ -73,7 +73,8 @@ router.get('/:projectId',async function(req, res) {
         //display list of projects
         var [project, tasks] = await projectController.getProject(req,res);
         var users = await projectController.getProjectUsers(req,res);
-        res.render('project',{object : project, tasks : tasks, users:users});
+        var status = await taskController.getAllStatus(req,res);
+        res.render('project',{object : project, tasks : tasks, users:users, status:status});
 
     }});
 

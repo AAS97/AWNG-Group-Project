@@ -120,3 +120,15 @@ exports.editTask = async function(req, res){
     task.save();
 
 };
+
+//return de status that a task can have
+exports.getAllStatus = async function(req, res) {
+    var project = await projectModel.findById(req.params.projectId).populate({path : 'members', model: userModel, select : 'firstname name'})
+        .catch(function (err) {
+            console.log(err);
+            res.render('error', {message: 'erreur getting projects', error: err});
+        });
+    var status = await statusModel.find();
+    return(status);
+
+};

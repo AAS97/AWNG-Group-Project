@@ -9,12 +9,12 @@
         <div class="container-fluid">
             <h2>List of project's tasks</h2>
 
-            // To Search by name task
+            <!--To Search by name task-->
             <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
 
-            //To Search by person assignee
+            <!-- To Search by person assignee-->
             <div class="form-group">
-                <label for="assignee">Assigned to:</label>
+                <label for="assignee">Status:</label>
                 <select class="form-control" name="assignee" id="assignee"  onchange="myFunction2()" value = "">
                         <option></option>
                     {{# each users}}
@@ -23,9 +23,9 @@
                 </select>
             </div>
 
-            //To Search by Status
+            <!--To Search by Status-->
             <div class="form-group">
-                <label for="assignee">Assigned to:</label>
+                <label for="status">Assigned to:</label>
                 <select class="form-control" name="status" id="status"  onchange="myFunction3()" value = "">
                     <option></option>
                     {{# each status}}
