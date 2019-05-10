@@ -42,6 +42,11 @@ exports.getUserFinishedTasks = async function(req, res){
             console.log(err);
             res.render('error', {message : 'erreur getting projects', error : err});
         });
+
+    for (var j = 0; j < tasks.length; j++){
+        tasks[j].formatted_start_date = await moment(tasks[j].start_date).format('YYYY-MM-DD');
+        tasks[j].formatted_due_date = await moment(tasks[j].due_date).format('YYYY-MM-DD');
+    }
     return(tasks);
 
 };
