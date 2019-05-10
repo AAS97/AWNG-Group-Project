@@ -1,5 +1,7 @@
 var userModel = require('../models/userModel');
 var projectController = require('../controllers/projectController');
+var userController = require('../controllers/userController');
+var taskController = require('../controllers/taskController');
 
 const { body,validationResult } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
@@ -66,14 +68,13 @@ exports.get_home = async function(req, res) {
         }
     });
 
-    await projectController.getUserProjects(req,res,function(projects){
-        projects.forEach((item,index)=>{
-            //console.log(item.name);
-        })
-    });
+    var projects = await projectController.getUserProjects(req,res);
+    var mytasks = await taskController.getUserTasks(req,res);
+    var myfinishedtasks = await taskController.getUserFinishedTasks(req,res);
 
 
-    res.render('dashboard');
+
+    res.render('dashboard',{projects: projects, mytasks: mytasks, myfinishedtasks: myfinishedtasks});
 
 };
 
