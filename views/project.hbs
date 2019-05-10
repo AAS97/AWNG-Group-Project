@@ -10,12 +10,12 @@
             <h2>List of project's tasks</h2>
 
             <!--To Search by name task-->
-            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+            <input type="text" id="myInput" class = "form-control" onkeyup="myFunction4(0,'myInput')" placeholder="Search Task.." title="Type in a name">
 
             <!-- To Search by person assignee-->
             <div class="form-group">
-                <label for="assignee">Status:</label>
-                <select class="form-control" name="assignee" id="assignee"  onchange="myFunction2()" value = "">
+                <label for="assignee">Assigned to:</label>
+                <select class="form-control" name="assignee" id="assignee"  onchange="myFunction4(1,'assignee')" value = "">
                         <option></option>
                     {{# each users}}
                         <option>{{this.firstname}} {{this.name}}</option>
@@ -25,8 +25,8 @@
 
             <!--To Search by Status-->
             <div class="form-group">
-                <label for="status">Assigned to:</label>
-                <select class="form-control" name="status" id="status"  onchange="myFunction3()" value = "">
+                <label for="status">Status:</label>
+                <select class="form-control" name="status" id="status"  onchange="myFunction4(2,'status')" value = "">
                     <option></option>
                     {{# each status}}
                         <option>{{this.name}} </option>
@@ -34,6 +34,7 @@
                 </select>
             </div>
 
+             </div>
 
             <table id ="myTable" class="table table-hover">
                 <thead>
@@ -70,17 +71,17 @@
 
 
 <script>
-    function myFunction() {
+    function myFunction4(tablePosition, Id) {
         var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("myInput");
+        input = document.getElementById(Id);
         filter = input.value.toUpperCase();
         table = document.getElementById("myTable");
         tr = table.getElementsByTagName("tr");
         for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0];
+            td = tr[i].getElementsByTagName("td")[tablePosition];
             if (td) {
                 txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                if (txtValue.toUpperCase().indexOf(filter) > -1 ) {
                     tr[i].style.display = "";
                 } else {
                     tr[i].style.display = "none";
@@ -89,43 +90,6 @@
         }
     }
 
-    function myFunction2() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("assignee");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("myTable");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[1];
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
-
-    function myFunction3() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("status");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("myTable");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[2];
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
 
 </script>
 
