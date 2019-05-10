@@ -74,7 +74,7 @@ exports.get_home = async function(req, res) {
 
 
 
-    res.render('dashboard',{projects: projects, mytasks: mytasks, myfinishedtasks: myfinishedtasks});
+    res.render('dashboard',{projects: projects, mytasks: mytasks, myfinishedtasks: myfinishedtasks, myprojectstasks: mytasks, othersprojectstasks: mytasks});
 
 };
 
