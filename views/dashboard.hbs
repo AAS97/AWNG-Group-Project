@@ -108,30 +108,47 @@
 
                 <h1>Task lists of the project of your choice</h1>
 
+                <!-- To Search by project -->
+                <div class="form-group">
+                    <label for="project">Project:</label>
+                    <select class="form-control" name="project" id="project"  onchange="myFunction(),myFunction2()" value = "">
+                        <option></option>
+                        {{# each projects}}
+                            <option>{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+
+
                 <h3>My tasks of this project</h3>
 
-                <table id ="myTable" class="table table-hover">
+                <table id ="myProjectTable" class="table table-hover">
                     <thead>
                     <tr>
                         <th scope="col">Name</th>
-                        <th scope="col">Assigned to</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Project</th>
                         <th scope="col">Status</th>
+                        <th scope="col">Start date</th>
+                        <th scope="col">Due date</th>
                         <th scope="col">Edit task</th>
                     </tr>
                     </thead>
 
                     <tbody>
 
-
-
                     {{#each myprojectstasks}}
 
                         <tr>
 
                             <td> <a href="/task/{{this._id}}">{{this.name}}</a></td>
-                            <td>{{this.assignee.firstname}} {{this.assignee.name}}</td>
+                            <td>{{this.desciption}}</td>
+                            <td>{{this.project.name}}</td>
                             <td>{{this.status.name}}</td>
+                            <td>{{this.start_date}}</td>
+                            <td>{{this.due_date}}</td>
                             <td><a href="/task/{{this._id}}/modify"><img src="https://img.icons8.com/metro/26/000000/edit-property.png"></a></td>
+
 
                         </tr>
 
@@ -142,28 +159,33 @@
 
                 <h3>Others tasks of this project</h3>
 
-                <table id ="myTable" class="table table-hover">
+                <table id ="otherProjectTable" class="table table-hover">
                     <thead>
                     <tr>
                         <th scope="col">Name</th>
-                        <th scope="col">Assigned to</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Project</th>
                         <th scope="col">Status</th>
+                        <th scope="col">Start date</th>
+                        <th scope="col">Due date</th>
                         <th scope="col">Edit task</th>
                     </tr>
                     </thead>
 
                     <tbody>
 
-
-
                     {{#each othersprojectstasks}}
 
                         <tr>
 
                             <td> <a href="/task/{{this._id}}">{{this.name}}</a></td>
-                            <td>{{this.assignee.firstname}} {{this.assignee.name}}</td>
+                            <td>{{this.desciption}}</td>
+                            <td>{{this.project.name}}</td>
                             <td>{{this.status.name}}</td>
+                            <td>{{this.start_date}}</td>
+                            <td>{{this.due_date}}</td>
                             <td><a href="/task/{{this._id}}/modify"><img src="https://img.icons8.com/metro/26/000000/edit-property.png"></a></td>
+
 
                         </tr>
 
@@ -172,12 +194,53 @@
                     </tbody>
                 </table>
 
-                <a href="/project/{{object._id}}/add" class="btn btn-primary btn-lg active" role="button" aria-pressed="true" style="margin-bottom : 10px">Add new task to this project</a>
-
             </div>
         </div>
     </div>
 </div>
 
 
+
+
+<script>
+
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("project");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myProjectTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[2];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function myFunction2() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("project");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("otherProjectTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[2];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+</script>
 
