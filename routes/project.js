@@ -31,14 +31,7 @@ router.get('/add', async function(req, res){
     }
 });
 
-router.post('/add', function(req, res){
-    if (!req.session.user_id){
-        res.redirect('/auth');
-    }
-    else {
-        projectController.addNewProject(req, res);
-    }
-});
+router.post('/add', projectController.addNewProject);
 
 router.get('/:projectId/add', async function(req,res){
     if (!req.session.user_id){

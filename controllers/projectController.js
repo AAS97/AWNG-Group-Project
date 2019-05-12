@@ -43,43 +43,47 @@ exports.getProjectUsers = async function(req, res) {
 };
 
 
-/*
+exports.addNewProject =
+    [
+        body('project_name', 'Project name required').isLength({min: 1}).trim(),
+        sanitizeBody('project_name').escape(),
 
-exports.addNewProject = async function(req, res) {
+        body('members', 'At least one member is required').isLength({min: 1}).trim(),
+        sanitizeBody('members').escape(),
 
-    body('project_name', 'Project name required').isLength({min: 1}).trim();
-    sanitizeBody('project_name').escape();
-
-    body('members', 'At least one member is required').isLength({min: 1}).trim();
-    sanitizeBody('members').escape();
-
-
-    async function process(req, res) {
-        const errors = validationResult(req);
-
-        if (!errors.isEmpty()) {
-            // There are errors. Render the form again with sanitized values/error messages.
-            console.log('errors');
-            res.render('error', {errors: errors.array()});
-            return;
-        } else {
-            // create a new project object and save it on the db
-            // is called by Post method
-
-            var ids = [];
-            var i;
-            for(i = 0; i<req.body.members.length; i++){
-               var split = req.body.members[i].split(' ');
-               await userController.getUserId(split, function (id){
-                   ids.push(id);
-                });
+        async function process(req, res) {
+            if (!req.session.user_id){
+                res.redirect('/auth');
             }
+            const errors = validationResult(req);
 
+            if (!errors.isEmpty()) {
+                // There are errors. Render the form again with sanitized values/error messages.
+                console.log('errors');
+                res.render('error', {errors: errors.array()});
+            } else {
+                // create a new project object and save it on the db
+                // is called by Post method
 
+                var ids = [];
+                var i;
+                for (i = 0; i < req.body.members.length; i++) {
+                    var id = await userController.getUserId(req.body.members[i].split(' '));
+                    ids.push(id);
+                }
+
+                var newProject = new projectModel({
+                    name : req.body.project_name,
+                    members : ids
+                });
+
+                newProject.save();
+
+                res.redirect('/project/'+newProject._id);
+            }
         }
-    };
-    process(req, res);
-};
 
 
- */
+];
+
+
