@@ -82,8 +82,6 @@ exports.addNewProject =
                 res.redirect('/project/'+newProject._id);
             }
         }
-
-
 ];
 
 
