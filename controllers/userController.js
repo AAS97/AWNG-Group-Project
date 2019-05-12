@@ -98,7 +98,7 @@ exports.addNewUser = [
 
                     });
                     newUser.save();
-                    
+
                     req.session.user_id = newUser._id;
                     res.redirect('/users/'+newUser._id);
 
