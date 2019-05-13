@@ -10,12 +10,12 @@
             <h2>List of project's tasks</h2>
 
             <!--To Search by name task-->
-            <input type="text" id="myInput" class = "form-control" onkeyup="myFunction4(0,'myInput')" placeholder="Search Task.." title="Type in a name">
+            <input type="text" id="myInput" class = "form-control" onkeyup="filterIndividuel(0,'myInput')" placeholder="Search Task.." title="Type in a name">
 
             <!-- To Search by person assignee-->
             <div class="form-group">
                 <label for="assignee">Assigned to:</label>
-                <select class="form-control" name="assignee" id="assignee"  onchange="myFunction4(1,'assignee')" value = "">
+                <select class="form-control" name="assignee" id="assignee"  onchange="filterIndividuel(1,'assignee')" value = "">
                         <option></option>
                     {{# each users}}
                         <option>{{this.firstname}} {{this.name}}</option>
@@ -26,7 +26,7 @@
             <!--To Search by Status-->
             <div class="form-group">
                 <label for="status">Status:</label>
-                <select class="form-control" name="status" id="status"  onchange="myFunction4(2,'status')" value = "">
+                <select class="form-control" name="status" id="status"  onchange="filterIndividuel()r(2,'status')" value = "">
                     <option></option>
                     {{# each status}}
                         <option>{{this.name}} </option>
@@ -71,7 +71,7 @@
 
 
 <script>
-    function myFunction4(tablePosition, Id) {
+    function filterIndividuel(tablePosition, Id) {
         var input, filter, table, tr, td, i, txtValue;
         input = document.getElementById(Id);
         filter = input.value.toUpperCase();
