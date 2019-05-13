@@ -44,6 +44,7 @@
                         <th scope="col">Start date</th>
                         <th scope="col">Due date</th>
                         <th scope="col">Edit task</th>
+                        <th scope="col">Delete task</th>
                     </tr>
                     </thead>
 
@@ -59,7 +60,8 @@
                             <td>{{this.status.name}}</td>
                             <td>{{this.formatted_start_date}}</td>
                             <td>{{this.formatted_due_date}}</td>
-                            <td><a href="/task/{{this._id}}/modify"><img src="https://img.icons8.com/metro/26/000000/edit-property.png"></a></td>
+                            <td><a href="/task/{{this._id}}/modify"><i class="fas fa-edit"></i></a></td>
+                            <td><a href="/task/{{this._id}}/delete"><i class="fas fa-trash-alt"></i></a></td>
 
                         </tr>
 
@@ -79,6 +81,7 @@
                         <th scope="col">Start date</th>
                         <th scope="col">Due date</th>
                         <th scope="col">Edit task</th>
+                        <th scope="col">Delete task</th>
                     </tr>
                     </thead>
 
@@ -92,7 +95,8 @@
                             <td>{{this.status.name}}</td>
                             <td>{{this.formatted_start_date}}</td>
                             <td>{{this.formatted_due_date}}</td>
-                            <td><a href="/task/{{this._id}}/modify"><img src="https://img.icons8.com/metro/26/000000/edit-property.png"></a></td>
+                            <td><a href="/task/{{this._id}}/modify"><i class="fas fa-edit"></i></a></td>
+                            <td><a href="/task/{{this._id}}/delete"><i class="fas fa-trash-alt"></i></a></td>
                         </tr>
                     {{/each}}
 
@@ -126,6 +130,7 @@
                         <th scope="col">Start date</th>
                         <th scope="col">Due date</th>
                         <th scope="col">Edit task</th>
+                        <th scope="col">Delete task</th>
                     </tr>
                     </thead>
 
@@ -141,7 +146,8 @@
                             <td>{{this.status.name}}</td>
                             <td>{{this.formatted_start_date}}</td>
                             <td>{{this.formatted_due_date}}</td>
-                            <td><a href="/task/{{this._id}}/modify"><img src="https://img.icons8.com/metro/26/000000/edit-property.png"></a></td>
+                            <td><a href="/task/{{this._id}}/modify"><i class="fas fa-edit"></i></a></td>
+                            <td><a href="/task/{{this._id}}/delete"><i class="fas fa-trash-alt"></i></a></td>
 
 
                         </tr>
@@ -163,6 +169,7 @@
                         <th scope="col">Start date</th>
                         <th scope="col">Due date</th>
                         <th scope="col">Edit task</th>
+                        <th scope="col">Delete task</th>
                     </tr>
                     </thead>
 
@@ -178,8 +185,8 @@
                             <td>{{this.status.name}}</td>
                             <td>{{this.formatted_start_date}}</td>
                             <td>{{this.formatted_due_date}}</td>
-                            <td><a href="/task/{{this._id}}/modify"><img src="https://img.icons8.com/metro/26/000000/edit-property.png"></a></td>
-
+                            <td><a href="/task/{{this._id}}/modify"><i class="fas fa-edit"></i></a></td>
+                            <td><a href="/task/{{this._id}}/delete"><i class="fas fa-trash-alt"></i></a></td>
 
                         </tr>
 
