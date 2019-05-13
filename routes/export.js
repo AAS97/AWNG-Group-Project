@@ -18,13 +18,7 @@ const statusFields = ["id","name"];
 const taskFields = ["id","name","description","start_date","due_date","project","assignee","status"];
 const userFields = ["id","name","firstname","login","password","role"];
 
-router.get('/', async function(req,res) {
-    if (!req.session.user_id) {
-        res.redirect('/auth');
-    } else {
-        exportController.getExportPage
-    }
-});
+router.get('/', exportController.getExportPage);
 
 router.post('/', urlEncodedParser,  async function(req,res){
     if (!req.session.user_id){

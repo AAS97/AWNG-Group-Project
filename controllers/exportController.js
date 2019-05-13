@@ -6,8 +6,6 @@ const path = require('path');
 
 
 
-
-
 exports.getExportPage = async function(req,res) {
     if (!req.session.user_id){
         res.redirect('/auth');
@@ -38,7 +36,7 @@ exports.exportToCsv = async function(req,res,model,fields,filename) {
 
         }
     });
-    
+
 
 };
 
