@@ -24,7 +24,7 @@
                         <select class="form-control" name="assignee" id="assignee"  onchange="filterColective(0,'myInput',1,'assignee',2,'status')" value = "">
                             <option></option>
                             {{# each users}}
-                                <option>{{this.firstname}} {{this.name}}</option>
+                                <option title = "{{this.firstname}} {{this.name}}">{{this.firstname}} {{this.name}}</option>
                             {{/each}}
                         </select>
 
@@ -34,13 +34,17 @@
                             <select class="form-control" name="status" id="status"  onchange="filterColective(0,'myInput',1,'assignee',2,'status')" value = "">
                                 <option></option>
                                 {{# each status}}
-                                    <option>{{this.name}} </option>
+                                    <option title = " {{this.name}}">{{this.name}}</option>
                                 {{/each}}
                             </select>
 
                     </th>
-                    <th scope="col">Start date</th>
-                    <th scope="col">Due date</th>
+                    <th scope="col">Start date
+                        <input type="date" class="form-control" name="start_date" value="" placeholder="Enter start date">
+                    </th>
+                    <th scope="col">Due date
+                        <input type="date" class="form-control" name="due_date" value="" placeholder="Enter due date">
+                    </th>
                     <th scope="col">Edit task</th>
                 </tr>
                 </thead>
@@ -54,13 +58,15 @@
                         <td> <a href="/task/{{this._id}}">{{this.name}}</a></td>
                         <td>{{this.assignee.firstname}} {{this.assignee.name}}</td>
                         <td>{{this.status.name}}</td>
-                        <td>{{this.start_date}}</td>
-                        <td>{{this.due_date}}</td>
+                        <td id ="startDate">{{this.start_date}}</td>
+                        <td id = "dueDate">{{this.due_date}}</td>
                         <td><a href="/task/{{this._id}}/modify"><img src="https://img.icons8.com/metro/26/000000/edit-property.png"></a></td>
 
                     </tr>
 
                 {{/each}}
+
+
 
                 </tbody>
             </table>
@@ -130,12 +136,9 @@
                     tr[i].style.display = "none";
                 }
 
+
         }
     }
-
-
-
-
 
 </script>
 
