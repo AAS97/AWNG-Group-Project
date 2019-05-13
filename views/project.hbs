@@ -10,32 +10,44 @@
             <h2>List of project's tasks</h2>
 
             <!--To Search by name task-->
-            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+            <input type="text" id="myInput" class = "form-control" onkeyup="filterColective(0,'myInput',1,'assignee',2,'status')" placeholder="Search Task.." title="Type in a name">
 
-            <div class="row">
-                <!-- To Search by person assignee-->
-                <div class="form-group col-sm-2">
-                    <label for="assignee">Status:</label>
-                    <select class="form-control" name="assignee" id="assignee"  onchange="myFunction2()" value = "">
-                            <option></option>
-                        {{# each users}}
-                            <option>{{this.firstname}} {{this.name}}</option>
-                        {{/each}}
-                    </select>
-                </div>
-
-                <!--To Search by Status-->
-                <div class="form-group col-sm-2">
-                    <label for="status">Assigned to:</label>
-                    <select class="form-control" name="status" id="status"  onchange="myFunction3()" value = "">
+            <!-- To Search by person assignee-->
+            <div class="form-group">
+                <label for="assignee">Assigned to:</label>
+                <select class="form-control" name="assignee" id="assignee"  onchange="filterColective(0,'myInput',1,'assignee',2,'status')" value = "">
                         <option></option>
-                        {{# each status}}
-                            <option>{{this.name}} </option>
-                        {{/each}}
-                    </select>
-                </div>
+                    {{# each users}}
+                        <option>{{this.firstname}} {{this.name}}</option>
+                    {{/each}}
+                </select>
             </div>
 
+<!--            &lt;!&ndash;To Search by Status&ndash;&gt;-->
+<!--            <div class="form-group">-->
+<!--                <label for="status">Status:</label>-->
+<!--                <select class="form-control" name="status" id="status"  onchange="filterIndividuel(2,'status')" value = "">-->
+<!--                    <option></option>-->
+<!--                    {{# each status}}-->
+<!--                        <option>{{this.name}} </option>-->
+<!--                    {{/each}}-->
+<!--                </select>-->
+<!--            </div>-->
+
+
+            <!--To Search by Status-->
+            <div class="form-group">
+                <label for="status">Status:</label>
+                <select class="form-control" name="status" id="status"  onchange="filterColective(0,'myInput',1,'assignee',2,'status')" value = "">
+                    <option></option>
+                    {{# each status}}
+                        <option>{{this.name}} </option>
+                    {{/each}}
+                </select>
+            </div>
+
+
+        </div>
 
             <table id ="myTable" class="table table-hover">
                 <thead>
@@ -44,7 +56,6 @@
                     <th scope="col">Assigned to</th>
                     <th scope="col">Status</th>
                     <th scope="col">Edit task</th>
-                    <th scope="col">Delete task</th>
                 </tr>
                 </thead>
 
@@ -57,8 +68,8 @@
                         <td> <a href="/task/{{this._id}}">{{this.name}}</a></td>
                         <td>{{this.assignee.firstname}} {{this.assignee.name}}</td>
                         <td>{{this.status.name}}</td>
-                        <td><a href="/task/{{this._id}}/modify"><i class="fas fa-edit"></i></a></td>
-                        <td><a href="/task/{{this._id}}/delete"><i class="fas fa-trash-alt"></i></a></td>
+                        <td><a href="/task/{{this._id}}/modify"><img src="https://img.icons8.com/metro/26/000000/edit-property.png"></a></td>
+
                     </tr>
 
                 {{/each}}
@@ -73,17 +84,17 @@
 
 
 <script>
-    function myFunction() {
+    function filterIndividuel(tablePosition, Id) {
         var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("myInput");
+        input = document.getElementById(Id);
         filter = input.value.toUpperCase();
         table = document.getElementById("myTable");
         tr = table.getElementsByTagName("tr");
         for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0];
+            td = tr[i].getElementsByTagName("td")[tablePosition];
             if (td) {
                 txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                if (txtValue.toUpperCase().indexOf(filter) > -1 ) {
                     tr[i].style.display = "";
                 } else {
                     tr[i].style.display = "none";
@@ -92,43 +103,47 @@
         }
     }
 
-    function myFunction2() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("assignee");
+    function filterIndividuelV2(tablePosition, Id, iter) {
+        var input, filter, table, tr, td, txtValue;
+        input = document.getElementById(Id);
         filter = input.value.toUpperCase();
         table = document.getElementById("myTable");
         tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[1];
+            td = tr[iter].getElementsByTagName("td")[tablePosition];
             if (td) {
                 txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                if (txtValue.toUpperCase().indexOf(filter) > -1 ) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+    }
+
+    function filterColective(tablePosTask,IdTask,tablePosAssignee,IdAssignee,tablePosStatus,IdStatus,){
+        var table, tr, i;
+
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+          let taskName =  filterIndividuelV2(tablePosTask,IdTask,i);
+           let assigneeName = filterIndividuelV2(tablePosAssignee, IdAssignee,i);
+            let statusName = filterIndividuelV2(tablePosStatus, IdStatus,i);
+
+                if (taskName && assigneeName && statusName ) {
                     tr[i].style.display = "";
                 } else {
                     tr[i].style.display = "none";
                 }
-            }
+
         }
     }
 
-    function myFunction3() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("status");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("myTable");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[2];
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
+
+
+
 
 </script>
 
