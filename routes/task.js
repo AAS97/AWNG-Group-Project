@@ -35,6 +35,16 @@ router.get('/:taskId/modify', async function(req,res){
 
     }});
 
+router.get('/:taskId/delete', async function(req, res){
+    if (!req.session.user_id){
+        res.redirect('/auth');
+    }
+    else{
+        await taskController.deleteTask(req,res);
+        res.redirect('/task');
+    }
+});
+
 router.post('/:taskId/modify', async function(req,res){
     if (!req.session.user_id){
         res.redirect('/auth');

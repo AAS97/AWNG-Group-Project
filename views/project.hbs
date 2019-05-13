@@ -10,12 +10,12 @@
             <h2>List of project's tasks</h2>
 
             <!--To Search by name task-->
-            <input type="text" id="myInput" class = "form-control" onkeyup="filterIndividuel(0,'myInput')" placeholder="Search Task.." title="Type in a name">
+            <input type="text" id="myInput" class = "form-control" onkeyup="filterColective(0,'myInput',1,'assignee',2,'status')" placeholder="Search Task.." title="Type in a name">
 
             <!-- To Search by person assignee-->
             <div class="form-group">
                 <label for="assignee">Assigned to:</label>
-                <select class="form-control" name="assignee" id="assignee"  onchange="filterIndividuel(1,'assignee')" value = "">
+                <select class="form-control" name="assignee" id="assignee"  onchange="filterColective(0,'myInput',1,'assignee',2,'status')" value = "">
                         <option></option>
                     {{# each users}}
                         <option>{{this.firstname}} {{this.name}}</option>
@@ -23,10 +23,22 @@
                 </select>
             </div>
 
+<!--            &lt;!&ndash;To Search by Status&ndash;&gt;-->
+<!--            <div class="form-group">-->
+<!--                <label for="status">Status:</label>-->
+<!--                <select class="form-control" name="status" id="status"  onchange="filterIndividuel(2,'status')" value = "">-->
+<!--                    <option></option>-->
+<!--                    {{# each status}}-->
+<!--                        <option>{{this.name}} </option>-->
+<!--                    {{/each}}-->
+<!--                </select>-->
+<!--            </div>-->
+
+
             <!--To Search by Status-->
             <div class="form-group">
                 <label for="status">Status:</label>
-                <select class="form-control" name="status" id="status"  onchange="filterIndividuel()r(2,'status')" value = "">
+                <select class="form-control" name="status" id="status"  onchange="filterColective(0,'myInput',1,'assignee',2,'status')" value = "">
                     <option></option>
                     {{# each status}}
                         <option>{{this.name}} </option>
@@ -34,7 +46,8 @@
                 </select>
             </div>
 
-             </div>
+
+        </div>
 
             <table id ="myTable" class="table table-hover">
                 <thead>
@@ -89,6 +102,47 @@
             }
         }
     }
+
+    function filterIndividuelV2(tablePosition, Id, iter) {
+        var input, filter, table, tr, td, txtValue;
+        input = document.getElementById(Id);
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+            td = tr[iter].getElementsByTagName("td")[tablePosition];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1 ) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+    }
+
+    function filterColective(tablePosTask,IdTask,tablePosAssignee,IdAssignee,tablePosStatus,IdStatus,){
+        var table, tr, i;
+
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+          let taskName =  filterIndividuelV2(tablePosTask,IdTask,i);
+           let assigneeName = filterIndividuelV2(tablePosAssignee, IdAssignee,i);
+            let statusName = filterIndividuelV2(tablePosStatus, IdStatus,i);
+
+                if (taskName && assigneeName && statusName ) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+
+        }
+    }
+
+
+
 
 
 </script>

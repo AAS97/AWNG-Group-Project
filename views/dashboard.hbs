@@ -1,4 +1,4 @@
-<div class="container" style="margin-top:30px; margin-left : 10px">
+<div class="container-fluid" style="margin-top:30px; margin-left : 10px">
     <div class="row">
         <div class="col-sm-2">
             <h2>About Me</h2>
@@ -7,7 +7,7 @@
         </div>
         <div class="col-sm-10">
             <div class="container-fluid">
-                <h1>List of my projects</h1>
+                <h1>My projects</h1>
                 <table class="table table-hover searchable sortable">
                     <thead>
                     <tr>
@@ -33,7 +33,7 @@
                 </table>
                 <a href="/project/add" class="btn btn-primary btn-lg active" role="button" aria-pressed="true" style="margin-bottom : 10px">Add new project</a>
 
-                <h1>List of my tasks</h1>
+                <h1>My tasks</h1>
                 <table class="table table-hover">
                     <thead>
                     <tr>
@@ -57,10 +57,9 @@
                             <td>{{this.desciption}}</td>
                             <td>{{this.project.name}}</td>
                             <td>{{this.status.name}}</td>
-                            <td>{{this.start_date}}</td>
-                            <td>{{this.due_date}}</td>
+                            <td>{{this.formatted_start_date}}</td>
+                            <td>{{this.formatted_due_date}}</td>
                             <td><a href="/task/{{this._id}}/modify"><img src="https://img.icons8.com/metro/26/000000/edit-property.png"></a></td>
-
 
                         </tr>
 
@@ -69,7 +68,7 @@
                     </tbody>
                 </table>
 
-                <h1>List of my finished tasks</h1>
+                <h1>My finished tasks</h1>
                 <table class="table table-hover">
                     <thead>
                     <tr>
@@ -86,27 +85,22 @@
                     <tbody>
 
                     {{#each myfinishedtasks}}
-
                         <tr>
-
                             <td> <a href="/task/{{this._id}}">{{this.name}}</a></td>
                             <td>{{this.desciption}}</td>
                             <td>{{this.project.name}}</td>
                             <td>{{this.status.name}}</td>
-                            <td>{{this.start_date}}</td>
-                            <td>{{this.due_date}}</td>
+                            <td>{{this.formatted_start_date}}</td>
+                            <td>{{this.formatted_due_date}}</td>
                             <td><a href="/task/{{this._id}}/modify"><img src="https://img.icons8.com/metro/26/000000/edit-property.png"></a></td>
-
-
                         </tr>
-
                     {{/each}}
 
                     </tbody>
                 </table>
 
 
-                <h1>Task lists of the project of your choice</h1>
+                <h1>Tasks of the project of my choice</h1>
 
                 <!-- To Search by project -->
                 <div class="form-group">
@@ -137,7 +131,7 @@
 
                     <tbody>
 
-                    {{#each myprojectstasks}}
+                    {{#each mytasks}}
 
                         <tr>
 
@@ -145,8 +139,8 @@
                             <td>{{this.desciption}}</td>
                             <td>{{this.project.name}}</td>
                             <td>{{this.status.name}}</td>
-                            <td>{{this.start_date}}</td>
-                            <td>{{this.due_date}}</td>
+                            <td>{{this.formatted_start_date}}</td>
+                            <td>{{this.formatted_due_date}}</td>
                             <td><a href="/task/{{this._id}}/modify"><img src="https://img.icons8.com/metro/26/000000/edit-property.png"></a></td>
 
 
@@ -174,7 +168,7 @@
 
                     <tbody>
 
-                    {{#each othersprojectstasks}}
+                    {{#each othersUsersTasks}}
 
                         <tr>
 
@@ -182,8 +176,8 @@
                             <td>{{this.desciption}}</td>
                             <td>{{this.project.name}}</td>
                             <td>{{this.status.name}}</td>
-                            <td>{{this.start_date}}</td>
-                            <td>{{this.due_date}}</td>
+                            <td>{{this.formatted_start_date}}</td>
+                            <td>{{this.formatted_due_date}}</td>
                             <td><a href="/task/{{this._id}}/modify"><img src="https://img.icons8.com/metro/26/000000/edit-property.png"></a></td>
 
 

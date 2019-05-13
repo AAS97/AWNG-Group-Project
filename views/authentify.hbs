@@ -14,8 +14,8 @@
 <div class="container-fluid">
     <form action="/auth" method="post">
         <div class="form-group">
-            <label for="username">Nom d'utilisateur</label>
-            <input type="string" class="form-control" name="username" aria-describedby="usernameHelp" placeholder="Enter username">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" name="username" aria-describedby="usernameHelp" placeholder="Enter username">
             <!--<small id="usernameHelp" class="form-text text-muted">Username is usually p.nom</small>-->
         </div>
         <div class="form-group">
@@ -26,9 +26,19 @@
             <input type="checkbox" class="form-check-input" id="checkout">
             <label class="form-check-label" for="checkout">Check me out</label>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+
+        <div class="row justify-content-start">
+            <div class="col-sm-1">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+
+            <div class="col-sm-1">
+                <p class="align-bottom"><a href="/auth/add">Sign in</a></p>
+            </div>
+        </div>
     </form>
 </div>
+
 
 
 

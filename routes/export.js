@@ -18,39 +18,50 @@ const statusFields = ["id","name"];
 const taskFields = ["id","name","description","start_date","due_date","project","assignee","status"];
 const userFields = ["id","name","firstname","login","password","role"];
 
-router.get('/',exportController.getExportPage);
+router.get('/', async function(req,res) {
+    if (!req.session.user_id) {
+        res.redirect('/auth');
+    } else {
+        exportController.getExportPage
+    }
+});
 
-router.post('/', urlEncodedParser, async function(req,res) {
+router.post('/', urlEncodedParser,  async function(req,res){
+    if (!req.session.user_id){
+        res.redirect('/auth');
+    }
+    else {
 
 
 
-    if (req.body.filetype == "csv") {
+        if (req.body.filetype == "csv") {
 
-        if (req.body.projects == "projects"){
+            if (req.body.projects == "projects"){
 
-            exportController.exportToCsv(req,res,projectModel,projectFields,"projects");
+                exportController.exportToCsv(req,res,projectModel,projectFields,"projects");
 
-        } if (req.body.users == "users") {
+            } if (req.body.users == "users") {
 
-            exportController.exportToCsv(req,res,userModel,userFields,"users");
+                exportController.exportToCsv(req,res,userModel,userFields,"users");
 
-        } if (req.body.tasks == "tasks") {
-            exportController.exportToCsv(req,res,taskModel,taskFields,"tasks");
+            } if (req.body.tasks == "tasks") {
+                exportController.exportToCsv(req,res,taskModel,taskFields,"tasks");
 
-        } if (req.body.statuses == "statuses") {
-            exportController.exportToCsv(req, res, statusModel, statusFields,"statuses");
+            } if (req.body.statuses == "statuses") {
+                exportController.exportToCsv(req, res, statusModel, statusFields,"statuses");
 
-        } if (req.body.journals == "journals") {
-            exportController.exportToCsv(req,res,journalModel,journalFields,"journals");
+            } if (req.body.journals == "journals") {
+                exportController.exportToCsv(req,res,journalModel,journalFields,"journals");
+
+            }
+
+        } else if (req.body.filetype == "jsontype") {
+
+            exportController.exportToJson(req,res);
 
         }
 
-    } else if (req.body.filetype == "jsontype") {
-
-        exportController.exportToJson(req,res);
-
     }
-
 });
 
 

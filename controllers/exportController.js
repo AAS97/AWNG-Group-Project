@@ -1,5 +1,3 @@
-var express = require('express');
-
 const fs = require('fs');
 const moment = require('moment');
 const json2csv = require('json2csv').parse;
@@ -11,13 +9,12 @@ const path = require('path');
 
 
 exports.getExportPage = async function(req,res) {
-
     if (!req.session.user_id){
         res.redirect('/auth');
     }
-
-    res.render('export',{});
-
+    else{
+        res.render('export',{});
+    }
 };
 
 exports.exportToCsv = async function(req,res,model,fields,filename) {
