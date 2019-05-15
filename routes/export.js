@@ -49,10 +49,74 @@ router.post('/', urlEncodedParser,  async function(req,res){
 
             }
 
-        } else if (req.body.filetype == "jsontype") {
+        } else if (req.body.filetype == "json") {
 
-            exportController.exportToJson(req,res);
 
+
+            if (req.body.projects == "projects"){
+
+                exportController.exportToJson(req,res,projectModel,"projects");
+
+            } if (req.body.users == "users") {
+
+                exportController.exportToJson(req,res,userModel,"users");
+
+            } if (req.body.tasks == "tasks") {
+                exportController.exportToJson(req,res,taskModel,"tasks");
+
+            } if (req.body.statuses == "statuses") {
+                exportController.exportToJson(req, res, statusModel, "statuses");
+
+            } if (req.body.journals == "journals") {
+                exportController.exportToJson(req,res,journalModel,"journals");
+
+            }
+
+        } else if (req.body.filetype == "xml") {
+
+            if (req.body.projects == "projects"){
+
+                exportController.exportToXml(req,res,projectModel,"projects");
+
+            } if (req.body.users == "users") {
+
+                exportController.exportToXml(req,res,userModel,"users");
+
+            } if (req.body.tasks == "tasks") {
+                exportController.exportToXml(req,res,taskModel,"tasks");
+
+            } if (req.body.statuses == "statuses") {
+                exportController.exportToXml(req, res, statusModel, "statuses");
+
+            } if (req.body.journals == "journals") {
+                exportController.exportToXml(req,res,journalModel,"journals");
+
+            }
+
+        } else if (req.body.filetype == "xlsx") {
+
+            if (req.body.projects == "projects") {
+
+                exportController.exportToXlsx(req, res, projectModel, "projects");
+
+            }
+            if (req.body.users == "users") {
+
+                exportController.exportToXlsx(req, res, userModel, "users");
+
+            }
+            if (req.body.tasks == "tasks") {
+                exportController.exportToXlsx(req, res, taskModel, "tasks");
+
+            }
+            if (req.body.statuses == "statuses") {
+                exportController.exportToXlsx(req, res, statusModel, "statuses");
+
+            }
+            if (req.body.journals == "journals") {
+                exportController.exportToXlsx(req, res, journalModel, "journals");
+
+            }
         }
 
     }
