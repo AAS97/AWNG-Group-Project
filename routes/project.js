@@ -73,8 +73,8 @@ router.get('/:projectId',async function(req, res) {
 
         for (var j = 0; j < tasks.length; j++){
 
-            tasks[j].formatted_start_date = await moment(tasks[j].start_date).format('DD-MM-YYYY');
-            tasks[j].formatted_due_date = await moment(tasks[j].due_date).format('DD-MM-YYYY');
+            tasks[j].formatted_start_date = await moment(tasks[j].start_date).format('YYYY-MM-DD');
+            tasks[j].formatted_due_date = await moment(tasks[j].due_date).format('YYYY-MM-DD');
         }
 
         res.render('project',{object : project, tasks : tasks, users:users, status:status});
