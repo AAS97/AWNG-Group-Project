@@ -23,8 +23,8 @@
 
                 <div class="form-group">
                     <label for="assignee">Assigned to:</label>
-                    <select class="form-control" name="assignee" id="assignee" onload="selectMember()">
-                        <!--<option selected="selected">{{task.assignee.firstname}} {{task.assignee.name}}</option>-->
+                    <select class="form-control" name="assignee" id="assignee">
+                        <option selected="selected">{{task.assignee.firstname}} {{task.assignee.name}}</option>
                         {{# each project.members}}
                             <option id={{this.first}}>{{this.firstname}} {{this.name}}</option>
                         {{/each}}
@@ -43,7 +43,7 @@
 
                 <div class="form-group">
                     <label for="status">Status</label>
-                    <select class="form-control" name="status" id="status" value="{{task.status.name}}">
+                    <select class="form-control" name="status" id="status">
                         <option selected="selected">{{task.status.name}}</option>
                         {{# each status}}
                             <option>{{this.name}}</option>
@@ -55,7 +55,8 @@
                     <label for="progress">Task progress :</label>
                     <input type="text" style="border:none; margin: 0;" id="sliderValue" value="">
                     <p style="display : inline-block; margin : 0;"> %</p>
-                    <input type="range" class="custom-range" name="progress" id="progress" value={{task.progress}} onchange="updateTextInput(this.value);">
+                    <input type="range" class="custom-range" name="progress" id="progress" value={{task.progress}}
+                           onchange="updateTextInput(this.value);" onload="updateTextInput(this.value);">
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -68,9 +69,5 @@
 <script>
     function updateTextInput(val) {
         document.getElementById('sliderValue').value=val;
-    }
-
-    function selectMember(){
-        document.getElementById({{task.assignee.name}}).selected="selected";
     }
 </script>

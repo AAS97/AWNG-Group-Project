@@ -29,8 +29,8 @@ router.get('/:taskId/modify', async function(req,res){
         //display modify form
         var [task, history] = await taskController.getTask(req,res);
         var project = await projectModel.findById(task.project)
-            .populate({path : 'members', model: userModel, select : 'firstname name'});
-        var status = await statusModel.find().exec();
+            .populate({path : 'members',match: { _id: { $ne: task.assignee._id }}, model: userModel, select : 'firstname name'});
+        var status = await statusModel.find({name: {$ne: task.status.name}}).exec();
         res.render('modify_task',{task : task, project : project, status :status});
 
     }

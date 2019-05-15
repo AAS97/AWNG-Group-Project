@@ -127,3 +127,11 @@ exports.editProject = async function(req, res){
     project.save();
 
 };
+
+
+exports.deleteProject =  async function(req, res) {
+    await projectModel.findByIdAndDelete(req.params.projectId)
+        .catch(function(err) {
+            res.render('error', {message: 'error on project deletion', error: err});
+        });
+};
