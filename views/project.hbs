@@ -51,9 +51,13 @@
                         <input type="date" class="form-control" name="due_date" value="" id = "due_date"
                                onkeyup="filterColective(0,'myInput',1,'assignee',2,'status',3,'start_date',4,'due_date')" placeholder="Enter due date">
                     </th>
-                    <th scope="col">Edit task</th>
 
-                   <th> <input type="reset"  class="btn btn-primary btn-lg active" onclick="filterColective(0,'myInput',1,'assignee',2,'status',3,'start_date',4,'due_date')"  value="Reset" ></th>
+                    <th> <input type="reset"  class="btn btn-primary btn-lg active" onclick="filterColective(0,'myInput',1,'assignee',2,'status',3,'start_date',4,'due_date')"  value="Reset" ></th>
+
+
+                    <th scope="col">Edit task</th>
+                    <th scope="col">Delete task</th>
+
                 </tr>
 
                 </thead>
@@ -71,8 +75,9 @@
                         <td>{{this.status.name}}</td>
                         <td>{{this.formatted_start_date}}</td>
                         <td>{{this.formatted_due_date}}</td>
-                        <td><a href="/task/{{this._id}}/modify"><img src="https://img.icons8.com/metro/26/000000/edit-property.png"></a></td>
-
+                        <td></td>
+                        <td><a href="/task/{{this._id}}/modify"><i class="fas fa-edit"></i></a></td>
+                        <td><a href="/task/{{this._id}}/delete"><i class="fas fa-trash-alt"></i></a></td>
                     </tr>
 
                 {{/each}}
