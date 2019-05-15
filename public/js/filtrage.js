@@ -1,18 +1,24 @@
 
-// Function used to filter individually, it doesn't take care of the other field of the filter
+// Function used to filter individually, it doesn't take care of the other fields of the filtering
+// This function is used to compare chains of characters
 function filterIndividuel(tablePosition, Id) {
     var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById(Id);
-    filter = input.value.toUpperCase();
+    input = document.getElementById(Id); //Take the input string
+    filter = input.value.toUpperCase(); // to compare we use Uppercase in our case it's not case sensitive
     table = document.getElementById("myTable");
     tr = table.getElementsByTagName("tr");
     for (i = 0; i < tr.length; i++) {
+        //takes the element in the i position
         td = tr[i].getElementsByTagName("td")[tablePosition];
         if (td) {
+            // takes the String in that element
             txtValue = td.textContent || td.innerText;
+            //Compare with the filter parameter
             if (txtValue.toUpperCase().indexOf(filter) > -1 ) {
+                //if it's the same show it
                 tr[i].style.display = "";
             } else {
+                //it it's not hide it
                 tr[i].style.display = "none";
             }
         }
@@ -20,6 +26,7 @@ function filterIndividuel(tablePosition, Id) {
 }
 
 // Function used in the colective function  to filter the differents elemetns of the table
+// it is used in the colective function
 function filterIndividuelV2(tablePosition, Id, iter) {
     var input, filter, table, tr, td, txtValue;
     input = document.getElementById(Id);
