@@ -17,11 +17,11 @@
                 <tr>
                     <th  scope="col">   Name
                         <!--To Search by name task-->
-                    <input type="text" id="myInput" class = "form-control" onkeyup="filterColectiveV2(0,'myInput',1,'assignee',2,'status',3,'start_date')" placeholder="Search Task.." title="Type in a name">
+                    <input type="text" id="myInput" class = "form-control" onkeyup="filterColectiveV2(0,'myInput',1,'assignee',2,'status',3,'start_date',4,'due_date')" placeholder="Search Task.." title="Type in a name">
 
                     </th>
                     <th scope="col">  Assigned to
-                        <select class="form-control" name="assignee" id="assignee"  onchange="filterColectiveV2(0,'myInput',1,'assignee',2,'status',3,'start_date')" value = "">
+                        <select class="form-control" name="assignee" id="assignee"  onchange="filterColectiveV2(0,'myInput',1,'assignee',2,'status',3,'start_date',4,'due_date')" value = "">
                             <option></option>
                             {{# each users}}
                                 <option title = "{{this.firstname}} {{this.name}}">{{this.firstname}} {{this.name}}</option>
@@ -31,7 +31,7 @@
                     </th>
                     <th scope="col"> Status
                         <!--To Search by Status-->
-                            <select class="form-control" name="status" id="status"  onchange="filterColectiveV2(0,'myInput',1,'assignee',2,'status',3,'start_date')" value = "">
+                            <select class="form-control" name="status" id="status"  onchange="filterColectiveV2(0,'myInput',1,'assignee',2,'status',3,'start_date',4,'due_date')" value = "">
                                 <option></option>
                                 {{# each status}}
                                     <option title = " {{this.name}}">{{this.name}}</option>
@@ -41,10 +41,11 @@
                     </th>
                     <th scope="col">Start date
                         <input type="date" class="form-control" name="start_date" id = "start_date" value=""
-                               onkeyup="filterColectiveV2(0,'myInput',1,'assignee',2,'status',3,'start_date')"  placeholder="Enter start date">
+                               onkeyup="filterColectiveV2(0,'myInput',1,'assignee',2,'status',3,'start_date',4,'due_date')"  placeholder="Enter start date">
                     </th>
                     <th scope="col">Due date
-                        <input type="date" class="form-control" name="due_date" value="" id = "due_date" placeholder="Enter due date">
+                        <input type="date" class="form-control" name="due_date" value="" id = "due_date"
+                               onkeyup="filterColectiveV2(0,'myInput',1,'assignee',2,'status',3,'start_date',4,'due_date')" placeholder="Enter due date">
                     </th>
                     <th scope="col">Edit task</th>
                 </tr>
@@ -206,7 +207,7 @@
     }
 
     // Function used to filter the table. it marge the results of the differents filters.
-    function filterColectiveV2(tablePosTask,IdTask,tablePosAssignee,IdAssignee,tablePosStatus,IdStatus,tablePosStart,IdStartDate){
+    function filterColectiveV2(tablePosTask,IdTask,tablePosAssignee,IdAssignee,tablePosStatus,IdStatus,tablePosStart,IdStartDate,tablePosDue,IdDueDate){
         var table, tr, i;
 
         table = document.getElementById("myTable");
@@ -217,8 +218,9 @@
             let assigneeName = filterIndividuelV2(tablePosAssignee, IdAssignee,i);
             let statusName = filterIndividuelV2(tablePosStatus, IdStatus,i);
             let startDate = dateFilteringV2(tablePosStart, IdStartDate,'biggerThan',i);
+            let dueDate = dateFilteringV2(tablePosDue, IdDueDate,'smallerThan',i);
 
-            if (taskName && assigneeName && statusName && startDate ) {
+            if (taskName && assigneeName && statusName && startDate && dueDate) {
                 tr[i].style.display = "";
             } else {
                 tr[i].style.display = "none";
