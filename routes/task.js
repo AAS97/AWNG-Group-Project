@@ -51,8 +51,7 @@ router.post('/:taskId/modify', async function(req,res){
     }
     else {
         await taskController.editTask(req,res);
-        var [task, history] = await taskController.getTask(req,res);
-        res.render('task',{task : task, history : history});
+        res.redirect('/task/'+req.params.taskId);
     }});
 
 router.get('/:taskId',async function(req, res) {

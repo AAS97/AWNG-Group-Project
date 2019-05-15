@@ -49,8 +49,22 @@
                     </select>
                 </div>
 
+                <div class="form-group">
+                    <label for="progress">Task progress :</label>
+                    <input type="text" style="border:none; margin: 0;" id="sliderValue" value="">
+                    <p style="display : inline-block; margin : 0;"> %</p>
+                    <input type="range" class="custom-range" name="progress" id="progress" value=0 onchange="updateTextInput(this.value);">
+                </div>
+
+
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </div>
 </div>
+
+<script>
+    function updateTextInput(val) {
+        document.getElementById('sliderValue').value=val;
+    }
+</script>

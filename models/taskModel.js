@@ -7,7 +7,8 @@ var taskSchema = new mongoose.Schema({
     due_date : Date,
     project : {type: mongoose.Schema.Types.ObjectId, ref: 'Projects'},
     assignee : {type: mongoose.Schema.Types.ObjectId, ref: 'Users'},
-    status : {type: mongoose.Schema.Types.ObjectId, ref: 'Statuses'}
+    status : {type: mongoose.Schema.Types.ObjectId, ref: 'Statuses'},
+    progress : {type: Number, default : 0},
 
 
 });

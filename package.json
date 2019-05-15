@@ -6,6 +6,7 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
+    "alasql": "^0.4.11",
     "async": "^2.6.2",
     "body-parser": "^1.8.1",
     "cookie-parser": "^1.4.4",
@@ -16,6 +17,7 @@
     "express-validator": "^5.3.1",
     "hbs": "~4.0.1",
     "http-errors": "~1.6.2",
+    "icg-json-to-xlsx": "^0.2.5",
     "json2csv": "^4.5.1",
     "json2xlsx": "^0.1.6",
     "json2xlsx-export": "^1.2.2",
@@ -25,6 +27,7 @@
     "mongo-xlsx": "^1.0.12",
     "mongoose": "^5.5.4",
     "morgan": "~1.9.0",
+    "xlsx": "^0.14.3",
     "xml-js": "^1.6.11"
   }
 }
