@@ -6,7 +6,7 @@
     </div>
     <div class="col-sm-8">
         <div class="container-fluid">
-            <h2>{{object.name}}</h2>
+            <h2>{{task.name}}</h2>
             <h2>Modify task's information</h2>
 
             <form action="" method="post">
@@ -23,10 +23,10 @@
 
                 <div class="form-group">
                     <label for="assignee">Assigned to:</label>
-                    <select class="form-control" name="assignee" id="assignee">
-                        <option selected="selected">{{task.assignee.firstname}} {{task.assignee.name}}</option>
+                    <select class="form-control" name="assignee" id="assignee" onload="selectMember()">
+                        <!--<option selected="selected">{{task.assignee.firstname}} {{task.assignee.name}}</option>-->
                         {{# each project.members}}
-                            <option>{{this.firstname}} {{this.name}}</option>
+                            <option id={{this.first}}>{{this.firstname}} {{this.name}}</option>
                         {{/each}}
                     </select>
                 </div>
@@ -51,8 +51,26 @@
                     </select>
                 </div>
 
+                <div class="form-group">
+                    <label for="progress">Task progress :</label>
+                    <input type="text" style="border:none; margin: 0;" id="sliderValue" value="">
+                    <p style="display : inline-block; margin : 0;"> %</p>
+                    <input type="range" class="custom-range" name="progress" id="progress" value={{task.progress}} onchange="updateTextInput(this.value);">
+                </div>
+
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </div>
 </div>
+
+
+<script>
+    function updateTextInput(val) {
+        document.getElementById('sliderValue').value=val;
+    }
+
+    function selectMember(){
+        document.getElementById({{task.assignee.name}}).selected="selected";
+    }
+</script>

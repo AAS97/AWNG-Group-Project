@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 var statusModel = require('../models/statusModel');
+
+
 var projectController = require('../controllers/projectController');
 var userController = require('../controllers/userController');
 var taskController = require('../controllers/taskController');
@@ -55,6 +57,28 @@ router.post('/:projectId/add', async function(req,res){
         await taskController.addNewTask(req, res);
         var [project, tasks] = await projectController.getProject(req,res);
         res.render('project',{object : project, tasks : tasks});
+    }
+});
+
+router.get('/:projectId/modify', async function(req,res){
+    if (!req.session.user_id){
+        res.redirect('/auth');
+    }
+    else {
+        //display modify form
+        var [project, tasks] = projectController.getProject(req,res);
+        res.render('modify_project',{project : project});
+
+    }
+});
+
+router.post('/:projectId/modify', async function(req,res){
+    if (!req.session.user_id){
+        res.redirect('/auth');
+    }
+    else {
+        await projectController.editProject(req,res);
+        res.redirect('/project/'+req.params.projectId);
     }
 });
 

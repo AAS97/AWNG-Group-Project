@@ -110,3 +110,20 @@ exports.addNewProject =
 ];
 
 
+exports.editProject = async function(req, res){
+    // get object on db, modify it and save it on the db
+    // is called by Post method
+    var ids = [];
+    var i;
+    for (i = 0; i < req.body.members.length; i++) {
+        var id = await userController.getUserId(req.body.members[i].split(' '));
+        ids.push(id);
+    }
+    var project = await projectModel.findById(req.params.projectId);
+
+    project.name = req.body.project_name;
+    project.members = ids;
+
+    project.save();
+
+};

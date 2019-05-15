@@ -146,6 +146,14 @@ exports.addNewTask = async function(req, res){
     var split = req.body.assignee.split(' ');
     var userId = await userController.getUserId(split);
 
+    //unspecified dates are set to today's date
+    if(!req.body.start_date){
+        req.body.start_date = new Date();
+    }
+    if(!req.body.start_date){
+        req.body.start_date = new Date();
+    }
+
     var newTask = new taskModel({
         name : req.body.task_name,
         description : req.body.task_descr,
@@ -154,6 +162,7 @@ exports.addNewTask = async function(req, res){
         project : req.params.projectId,
         status : status._id,
         assignee : userId,
+        progress : req.body.progress,
 
     });
 
@@ -162,7 +171,7 @@ exports.addNewTask = async function(req, res){
 };
 
 exports.editTask = async function(req, res){
-    // create a new task object and save it on the db
+    // get task on db, modify it before saving
     // is called by Post method
     var status = await statusModel.findOne({name : req.body.status})
         .catch(function(err) {
@@ -175,12 +184,16 @@ exports.editTask = async function(req, res){
 
     task.name = req.body.task_name;
     task.description = req.body.task_descr;
+    task.progress = req.body.progress;
+
+    //if date are modified
     if(req.body.start_date){
         task.start_date = req.body.start_date;
     }
     if(req.body.start_date){
         task.due_date = req.body.due_date;
     }
+
     task.status = status._id;
     task.assignee = userId;
 
