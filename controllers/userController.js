@@ -1,4 +1,9 @@
+
+
 var userModel = require('../models/userModel');
+var projectModel = require('../models/projectModel');
+
+
 var projectController = require('../controllers/projectController');
 var taskController = require('../controllers/taskController');
 
@@ -149,4 +154,17 @@ exports.getUserId = async function([firstname, name]){
     return member._id;
 };
 
+exports.allUserExceptProjectMembers = async function(req, res) {
 
+    var project = await projectModel.findById(req.params.projectId).select('members')
+        .catch(function(err){
+            console.log(res.render('error', {message : 'error while looking for members', error : err}));
+        });
+    var other_users= await userModel.find({_id : {$nin : project.members}}).select('name firstname')
+        .catch(function(err){
+            console.log(res.render('error', {message : 'error while looking for members', error : err}));
+        });
+
+    return(other_users);
+
+};

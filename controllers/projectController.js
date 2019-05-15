@@ -1,5 +1,6 @@
 var projectModel = require('../models/projectModel');
 var userModel = require('../models/userModel');
+var taskModel = require('../models/taskModel');
 
 var taskController = require('../controllers/taskController');
 var userController = require('../controllers/userController');
@@ -151,6 +152,15 @@ exports.editProject = async function(req, res){
 
 
 exports.deleteProject =  async function(req, res) {
+    // find all project tasks and delete one by one
+    var tasks = await taskModel.find({project : req.params.projectId });
+    var i;
+    for(i = 0; i<tasks.length; i++) {
+        await taskModel.findByIdAndDelete(tasks[i]._id)
+            .catch(function(err) {
+                res.render('error', {message: 'error on task deletion', error: err});
+            });
+    }
     await projectModel.findByIdAndDelete(req.params.projectId)
         .catch(function(err) {
             res.render('error', {message: 'error on project deletion', error: err});
