@@ -16,6 +16,7 @@
         </div>
 
             <table id ="myTable" class="table table-hover">
+                <form>
                 <thead>
                 <tr>
                     <th  scope="col">   Name
@@ -51,8 +52,13 @@
                                onkeyup="filterColective(0,'myInput',1,'assignee',2,'status',3,'start_date',4,'due_date')" placeholder="Enter due date">
                     </th>
                     <th scope="col">Edit task</th>
+
+                   <th> <input type="reset"  class="btn btn-primary btn-lg active" onclick="filterColective(0,'myInput',1,'assignee',2,'status',3,'start_date',4,'due_date')"  value="Reset" ></th>
                 </tr>
+
                 </thead>
+
+                </form>
 
                 <tbody>
 
@@ -76,9 +82,11 @@
                 </tbody>
             </table>
             <a href="/project/{{object._id}}/add" class="btn btn-primary btn-lg active" role="button" aria-pressed="true" style="margin-bottom : 10px">Add new task to the project</a>
+             <button onclick="resetFilter('myInput','assignee','status','start_date','due_date')">Click me</button>
 
         </div>
     </div>
 </div>
+
 
 
