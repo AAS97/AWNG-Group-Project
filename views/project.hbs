@@ -40,8 +40,10 @@
 
                     </th>
                     <th scope="col">Start date
+<!--                        <input type="date" class="form-control" name="start_date" id = "start_date" value=""-->
+<!--                               onkeyup="dateFiltering(3,'start_date','biggerThan')"  placeholder="Enter start date">-->
                         <input type="date" class="form-control" name="start_date" id = "start_date" value=""
-                               onkeyup="dateFiltering(3,'start_date','biggerThan')"  placeholder="Enter start date">
+                               onkeyup="filterColective(0,'myInput',1,'assignee',2,'status',3,'start_date')"  placeholder="Enter start date">
                     </th>
                     <th scope="col">Due date
                         <input type="date" class="form-control" name="due_date" value="" id = "due_date" placeholder="Enter due date">
@@ -184,7 +186,7 @@
 
 
     // Function used to filter the table. it marge the results of the differents filters.
-    function filterColective(tablePosTask,IdTask,tablePosAssignee,IdAssignee,tablePosStatus,IdStatus,tablePosStartDate, IdStartDate){
+    function filterColective(tablePosTask,IdTask,tablePosAssignee,IdAssignee,tablePosStatus,IdStatus){
         var table, tr, i;
 
         table = document.getElementById("myTable");
@@ -194,9 +196,9 @@
           let taskName =  filterIndividuelV2(tablePosTask,IdTask,i);
            let assigneeName = filterIndividuelV2(tablePosAssignee, IdAssignee,i);
             let statusName = filterIndividuelV2(tablePosStatus, IdStatus,i);
-             let startDate = dateFiltering(tablePosStatus, IdStatus,'biggerThan',i);
+            // let startDate = dateFiltering(tablePosStartDate, IdStartDate,'biggerThan',i);
 
-                if (taskName && assigneeName && statusName && startDate) {
+                if (taskName && assigneeName && statusName ) {
                     tr[i].style.display = "";
                 } else {
                     tr[i].style.display = "none";
