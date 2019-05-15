@@ -40,10 +40,11 @@
 
                     </th>
                     <th scope="col">Start date
-                        <input type="date" class="form-control" name="start_date" value="" placeholder="Enter start date">
+                        <input type="date" class="form-control" name="start_date" id = "start_date" value=""
+                               onkeyup="dateFiltering(3,'start_date','biggerThan')"  placeholder="Enter start date">
                     </th>
                     <th scope="col">Due date
-                        <input type="date" class="form-control" name="due_date" value="" placeholder="Enter due date">
+                        <input type="date" class="form-control" name="due_date" value="" id = "due_date" placeholder="Enter due date">
                     </th>
                     <th scope="col">Edit task</th>
                 </tr>
@@ -58,8 +59,8 @@
                         <td> <a href="/task/{{this._id}}">{{this.name}}</a></td>
                         <td>{{this.assignee.firstname}} {{this.assignee.name}}</td>
                         <td>{{this.status.name}}</td>
-                        <td id ="startDate">{{this.start_date}}</td>
-                        <td id = "dueDate">{{this.due_date}}</td>
+                        <td>{{this.start_date}}</td>
+                        <td>{{this.due_date}}</td>
                         <td><a href="/task/{{this._id}}/modify"><img src="https://img.icons8.com/metro/26/000000/edit-property.png"></a></td>
 
                     </tr>
@@ -118,8 +119,72 @@
 
     }
 
+    // Function used to filter the date. Individual filter not used for the collective filter
+    function dateFiltering(tablePosition, Id, selector) {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById(Id);
+        filter = input.value;
+        var dateFilter = Date.parse(filter);
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[tablePosition];
+            if (td && selector === "biggerThan") {
+                var date =  Date.parse(td.textContent);
+                if (date >= dateFilter || Number.isNaN(dateFilter)) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+
+            if (td && selector === "smallerThan") {
+                var date =  Date.parse(td.textContent);
+                if (date <= dateFilter || Number.isNaN(dateFilter)) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+
+    }
+
+
+    // Function used to filter the date. Individual filter not used for the collective filter
+    function dateFilteringV2(tablePosition, Id, selector, iter) {
+        var input, filter, table, tr, td;
+        input = document.getElementById(Id);
+        filter = input.value;
+        var dateFilter = Date.parse(filter);
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+            td = tr[iter].getElementsByTagName("td")[tablePosition];
+
+            if (td && selector === "biggerThan") {
+                var date =  Date.parse(td.textContent);
+                if (date >= dateFilter || Number.isNaN(dateFilter)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            if (td && selector === "smallerThan") {
+                var date =  Date.parse(td.textContent);
+                if (date <= dateFilter || Number.isNaN(dateFilter)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+
+
     // Function used to filter the table. it marge the results of the differents filters.
-    function filterColective(tablePosTask,IdTask,tablePosAssignee,IdAssignee,tablePosStatus,IdStatus){
+    function filterColective(tablePosTask,IdTask,tablePosAssignee,IdAssignee,tablePosStatus,IdStatus,tablePosStartDate, IdStartDate){
         var table, tr, i;
 
         table = document.getElementById("myTable");
@@ -129,8 +194,9 @@
           let taskName =  filterIndividuelV2(tablePosTask,IdTask,i);
            let assigneeName = filterIndividuelV2(tablePosAssignee, IdAssignee,i);
             let statusName = filterIndividuelV2(tablePosStatus, IdStatus,i);
+             let startDate = dateFiltering(tablePosStatus, IdStatus,'biggerThan',i);
 
-                if (taskName && assigneeName && statusName ) {
+                if (taskName && assigneeName && statusName && startDate) {
                     tr[i].style.display = "";
                 } else {
                     tr[i].style.display = "none";
