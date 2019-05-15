@@ -27,6 +27,7 @@ router.get('/', exportController.getExportPage);
 
 //Post method for the export form
 router.post('/', urlEncodedParser,  async function(req,res){
+    console.log(req.body.groupOfDefaultRadios);
     if (!req.session.user_id){ //redirecting any unlogged user to the authentification page
         res.redirect('/auth');
     }
@@ -34,7 +35,7 @@ router.post('/', urlEncodedParser,  async function(req,res){
 
         var hasSelected = false; //Boolean to detect if a user has clicked on the submit button without selecting any collections
 
-        if (req.body.filetype == "csv") { //Exporting every collections that were selected by the user into the chosen format
+        if (req.body.groupOfDefaultRadios == "csv") { //Exporting every collections that were selected by the user into the chosen format
 
 
             if (req.body.projects == "projects"){
@@ -60,7 +61,7 @@ router.post('/', urlEncodedParser,  async function(req,res){
                 hasSelected = true;
             }
 
-        } else if (req.body.filetype == "json") {
+        } else if (req.body.groupOfDefaultRadios == "json") {
 
 
             if (req.body.projects == "projects"){
@@ -87,7 +88,7 @@ router.post('/', urlEncodedParser,  async function(req,res){
 
             }
 
-        } else if (req.body.filetype == "xml") {
+        } else if (req.body.groupOfDefaultRadios == "xml") {
 
             if (req.body.projects == "projects"){
 
@@ -113,32 +114,32 @@ router.post('/', urlEncodedParser,  async function(req,res){
 
             }
 
-        } else if (req.body.filetype == "xlsx") {
+        } else if (req.body.groupOfDefaultRadios == "xlsx") {
 
             if (req.body.projects == "projects") {
 
-                exportController.exportToXlsx(req, res, "projects");
+                exportController.exportToXlsx(req, res,projectModel, "projects");
                 hasSelected = true;
 
             }
             if (req.body.users == "users") {
 
-                exportController.exportToXlsx(req, res, "users");
+                exportController.exportToXlsx(req, res,userModel, "users");
                 hasSelected = true;
 
             }
             if (req.body.tasks == "tasks") {
-                exportController.exportToXlsx(req, res, "tasks");
+                exportController.exportToXlsx(req, res,taskModel, "tasks");
                 hasSelected = true;
 
             }
             if (req.body.statuses == "statuses") {
-                exportController.exportToXlsx(req, res, "statuses");
+                exportController.exportToXlsx(req, res,statusModel, "statuses");
                 hasSelected = true;
 
             }
             if (req.body.journals == "journals") {
-                exportController.exportToXlsx(req, res, "journals");
+                exportController.exportToXlsx(req, res,journalModel, "journals");
                 hasSelected = true;
 
             }
@@ -146,7 +147,6 @@ router.post('/', urlEncodedParser,  async function(req,res){
         }
 
         var message; //Message to inform the user
-        console.log(hasSelected);
         if (hasSelected) {
 
             message = "You successfully exported data !";

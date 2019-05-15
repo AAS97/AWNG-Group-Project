@@ -1,7 +1,7 @@
 mongoose = require('mongoose');
 
 var statusSchema = new mongoose.Schema({
-    name : String,
+    name : String
 });
 
 var statusModel = mongoose.model('statuses', statusSchema);
