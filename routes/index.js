@@ -8,7 +8,7 @@ router.get('/', function(req, res) {
     res.redirect('/auth');
   }
   else {
-    res.redirect('/user/'+req.session.user_id);
+    res.redirect('/users/'+req.session.user_id);
   }
 
 });
