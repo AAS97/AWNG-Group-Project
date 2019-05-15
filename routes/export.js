@@ -149,11 +149,11 @@ router.post('/', urlEncodedParser,  async function(req,res){
         var message; //Message to inform the user
         if (hasSelected) {
 
-            message = "You successfully exported data !";
+            message = "You successfully exported data. Please check in your 'exports' file.";
 
         } else {
 
-            message = "You have not selected any collection to export !";
+            message = "You have not selected any collection to export.";
 
         }
 
