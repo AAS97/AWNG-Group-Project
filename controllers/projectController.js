@@ -45,6 +45,52 @@ findProgress= async function(project,tasks){
     project.progress = Math.round(progress/tasks.length);
 }
 
+findBurndown = async function(project,tasks){
+    var dates = [];
+    var data = [];
+    for (var j = 0; j < tasks.length; j++){
+        dates[2*j]=tasks[j].start_date;
+        dates[2*j+1]=tasks[j].due_date;
+    }
+
+    for (var j = 0; j < dates.length; j++){
+        var current=dates[j];
+        var current_c=new Date(dates[j]);
+        for (var i = j; i > 0  ; i--){
+            if (new Date(dates[i-1]) > current_c){
+                dates[i] = dates[i-1];
+            }
+            else{break;}
+        }
+        dates[i]=current;
+    }
+
+        for (var j = 0; j < dates.length; j++){
+        var date_current=new Date(dates[j]);
+        var current_data=0;
+        for (var i = 0; i < tasks.length; i++){
+            var date_start=new Date(tasks[i].start_date);
+            var date_due=new Date(tasks[i].due_date);
+            if (date_current<=date_due){
+                if (date_current<= date_start){
+                    current_data=current_data+1;
+                }
+                else{
+                    current_data=current_data+(date_due-date_current)/(date_due-date_start);
+                }
+            }
+
+        }
+        data[j]=current_data/(tasks.length);
+    }
+    var datas=[];
+    for (var j = 0; j < dates.length; j++){
+        datas[j]={ date : await moment(dates[j]).format('YYYY, MM-1, DD'), value : data[j]};
+        }
+    project.datas=datas;
+    }
+
+
 // return list of projects in which logged user is implied
 exports.getUserProjects = async function(req, res){
     var projects = await projectModel.find({members : req.session.user_id}).populate({path : 'members', model: userModel, select : 'firstname name'})
@@ -71,6 +117,7 @@ exports.getProject = async function(req, res) {
 
    await findDate(project,tasks);
    await findProgress(project,tasks);
+   await findBurndown(project,tasks);
 
     return([project, tasks]);
 
