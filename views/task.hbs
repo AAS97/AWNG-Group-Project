@@ -5,9 +5,14 @@
         <div class="fakeimg"></div>
     </div>
     <div class="col-sm-8">
-        <h1>{{object.name}}</h1>
+        <h1>{{task.name}}</h1>
         <div class="container-fluid">
-            <h2>Task's details</h2>
+            <div class="row">
+                <h2 class="col-sm-3">Task's details</h2>
+                <a href="/task/{{task._id}}/delete" style="margin-bottom:10px; margin-right: 10px" class="btn btn-primary btn-lg active col-sm-2" role="button" aria-pressed="true" >Delete task</a>
+                <a href="/task/{{task._id}}/modify" style="margin-bottom: 10px" class="btn btn-primary btn-lg active col-sm-2" role="button" aria-pressed="true" >Modify task</a>
+            </div>
+
             <table class="table table-hover">
                 <thead>
                 <tr>
@@ -17,6 +22,7 @@
                     <th scope="col">Status</th>
                     <th scope="col">Start date</th>
                     <th scope="col">Due date</th>
+                    <th scope="col">Progress</th>
                 </tr>
                 </thead>
 
@@ -29,6 +35,9 @@
                         <td>{{task.status.name}}</td>
                         <td>{{task.formatted_start_date}}</td>
                         <td>{{task.formatted_due_date}}</td>
+                        <td>
+                            <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="{{task.progress}}" aria-valuemin="0" aria-valuemax="100">{{task.progress}}</div>
+                        </td>
 
 
                     </tr>

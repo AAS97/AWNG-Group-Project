@@ -5,8 +5,15 @@
         <div class="fakeimg"></div>
     </div>
     <div class="col-sm-8">
-        <h1>{{object.name}}</h1>
-        <div class="container-fluid">
+
+            <div class="row">
+                <h2 class="col-sm-4">{{object.name}}</h2>
+                <a href="/project/{{object._id}}/delete" style="margin-bottom:10px; margin-right: 10px" class="btn btn-primary btn-lg active col-sm-2" role="button" aria-pressed="true" >Delete project</a>
+                <a href="/project/{{object._id}}/modify" style="margin-bottom:10px;" class="btn btn-primary btn-lg active col-sm-2" role="button" aria-pressed="true" >Modify project</a>
+            </div>
+
+
+            <div class="container-fluid">
             <h2>List of project's tasks</h2>
 
             <!--To Search by name task-->
@@ -56,6 +63,8 @@
                     <th scope="col">Assigned to</th>
                     <th scope="col">Status</th>
                     <th scope="col">Edit task</th>
+                    <th scope="col">Delete task</th>
+
                 </tr>
                 </thead>
 
@@ -68,7 +77,8 @@
                         <td> <a href="/task/{{this._id}}">{{this.name}}</a></td>
                         <td>{{this.assignee.firstname}} {{this.assignee.name}}</td>
                         <td>{{this.status.name}}</td>
-                        <td><a href="/task/{{this._id}}/modify"><img src="https://img.icons8.com/metro/26/000000/edit-property.png"></a></td>
+                        <td><a href="/task/{{this._id}}/modify"><i class="fas fa-edit"></i></a></td>
+                        <td><a href="/task/{{this._id}}/delete"><i class="fas fa-trash-alt"></i></a></td>
 
                     </tr>
 
