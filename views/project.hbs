@@ -78,9 +78,10 @@
     </div>
 </div>
 
+
 <h2>Gantt Diagramm of {{project.name}}</h2>
 <div class="progress">
-    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+    <div class="progress-bar" role="progressbar" style="width: {{project.progress}}%;" aria-valuenow="{{project.progress}}" aria-valuemin="0" aria-valuemax="100">{{project.progress}}%</div>
 </div>
 <div id="container"></div>
 
@@ -246,16 +247,13 @@
 
     // THE CHART
     Highcharts.ganttChart('container', {
-        title: {
-            text: ''
-        },
+
         xAxis: {
             min: Date.UTC({{project.diagramm_start_date}}),
             max: Date.UTC({{project.diagramm_due_date}})
         },
 
         series: [{
-            name: "{{project.name}}",
             data: [ {{#each tasks}}
                 {name: "{{this.name}}",
                     start: Date.UTC({{this.diagramm_start_date}}),

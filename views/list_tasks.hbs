@@ -48,3 +48,22 @@
         </div>
     </div>
 </div>
+
+<h2>Gantt Diagramm of my Tasks</h2>
+<div id="container"></div>
+
+<script src="https://code.highcharts.com/gantt/highcharts-gantt.js"></script>
+
+<script>
+    // THE CHART
+    Highcharts.ganttChart('container', {
+        series: [{
+            data: [ {{#each object}}
+                {name: "{{this.name}}",
+                    start: Date.UTC({{this.diagramm_start_date}}),
+                    end: Date.UTC({{this.diagramm_due_date}}),
+                    completed: {{this.progress}}*0.01},
+            {{/each}}]
+        }]
+    });
+</script>

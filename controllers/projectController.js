@@ -10,6 +10,41 @@ const { sanitizeBody } = require('express-validator/filter');
 var moment = require('moment');
 
 
+findDate= async function(project,tasks){
+    // Détermination de la date de début de projet
+    for (var j = 0; j < tasks.length; j++){
+        if (j==0){
+            var project_start_date=tasks[0].start_date;
+        }
+        var date_p=new Date(project_start_date);
+        var date_c=new Date(tasks[j].start_date);
+        if (date_p > date_c){
+            project_start_date=tasks[j].start_date;
+        }
+    }
+    project.diagramm_start_date = await moment(project_start_date).format('YYYY, MM-1, DD');
+
+    // Détermination de la date de fin de projet
+    for (var j = 0; j < tasks.length; j++){
+        if (j==0){
+            var project_due_date=tasks[0].due_date;
+        }
+        var date_p=new Date(project_due_date);
+        var date_c=new Date(tasks[j].due_date);
+        if (date_p < date_c){ project_due_date=tasks[j].due_date; }
+    }
+    project.diagramm_due_date = await moment(project_due_date).format('YYYY, MM-1, DD');
+
+}
+
+findProgress= async function(project,tasks){
+    var progress=0;
+    for (var j = 0; j < tasks.length; j++){
+        progress=progress+tasks[j].progress;
+    }
+    project.progress = Math.round(progress/tasks.length);
+}
+
 // return list of projects in which logged user is implied
 exports.getUserProjects = async function(req, res){
     var projects = await projectModel.find({members : req.session.user_id}).populate({path : 'members', model: userModel, select : 'firstname name'})
@@ -17,6 +52,11 @@ exports.getUserProjects = async function(req, res){
                 console.log(err);
                 res.render('error', {message : 'erreur getting projects', error : err});
         });
+    for (var j = 0; j < projects.length; j++){
+        var tasks  =  await taskController.getProjectTasksId(projects[j]._id);
+        await findDate(projects[j],tasks);
+        await findProgress(projects[j],tasks);
+    }
     return(projects);
 };
 
@@ -29,29 +69,8 @@ exports.getProject = async function(req, res) {
         });
    var tasks = await taskController.getProjectTasks(req, res);
 
-   for (var j = 0; j < tasks.length; j++){
-       if (j==0){
-           var project_start_date=tasks[0].start_date;
-       }
-       var date_p=new Date(project_start_date);
-       var date_c=new Date(tasks[j].start_date);
-       if (date_p > date_c){
-           project_start_date=tasks[j].start_date;
-       }
-    }
-    project.diagramm_start_date = await moment(project_start_date).format('YYYY, MM-1, DD');
-    // Détermination de la date de début de projet
-    for (var j = 0; j < tasks.length; j++){
-        if (j==0){
-            var project_due_date=tasks[0].due_date;
-        }
-        var date_p=new Date(project_due_date);
-        var date_c=new Date(tasks[j].due_date);
-        if (date_p < date_c){ project_due_date=tasks[j].due_date; }
-    }
-    // Détermination de la date de fin de projet
-    project.diagramm_due_date = await moment(project_due_date).format('YYYY, MM-1, DD');
-
+   await findDate(project,tasks);
+   await findProgress(project,tasks);
 
     return([project, tasks]);
 
