@@ -86,13 +86,14 @@ exports.exportToJson = async function(req,res,model,filename) {
 
 
 //Function that exports the selected collection(s) into a xlsx file.
-exports.exportToXlsx = async function(req,res,filename) {
+exports.exportToXlsx = async function(req,res,model,filename) {
 
-    var data = await model.find({}).lean();
-    var model = mongoXlsx.buildDynamicModel(data); //mongoXlsx requires a specific syntax for the model that will me provided by the buildDynamicModel method
+    var data = await model.find({});
+    var dynamicModel = mongoXlsx.buildDynamicModel(data); //mongoXlsx requires a specific syntax for the model that will me provided by the buildDynamicModel method
+    console.log(dynamicModel);
+    console.log(data);
 
-
-    mongoXlsx.mongoData2Xlsx(data, model, function(err, data) {
+    mongoXlsx.mongoData2Xlsx(data, dynamicModel, function(err, data) {
         console.log('File saved at:', data.fullPath);
     });
 

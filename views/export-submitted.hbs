@@ -5,32 +5,116 @@
 <head>
     <meta charset="UTF-8">
     <title>Export Database</title>
+</head>
+
 
 <body>
 
-{{message}}
-
-<form method="post">
-
-    <select name = 'filetype'>
-        <option value="csv">csv</option>
-        <option value="json">json</option>
-        <option value = "xml">xml</option>
-        <option value = "xlsx">xlsx</option>
-    </select>
-    <br>
-
-    Please select the collections you wish to export:
-    <br>
-    <input type="checkbox" name ="projects" value ="projects">Projects<br>
-    <input type="checkbox" name ="users" value ="users">Users<br>
-    <input type="checkbox" name ="tasks" value ="tasks">Tasks<br>
-    <input type="checkbox" name ="statuses" value ="statuses">Statuses<br>
-    <input type="checkbox" name ="journals" value ="journals">Journals<br>
 
 
-    </select>
-    <input type="submit" value="Export">
-</form>
+<div class="row">
+    <div class="col-sm-2">
+        <h2>About Me</h2>
+        <h5>Photo of me:</h5>
+        <div class="fakeimg"></div>
+    </div>
+    <div class="col-sm-8">
+
+        <div class="alert alert-danger" role="alert">
+            <b>{{message}}</b>
+        </div>
+
+        <h1>Export Collections from the Database</h1>
+
+        <br>
+
+        <b>Please select the format of the exported file:</b>
+
+        <br>
+        <br>
+
+        <form method="post">
+
+
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="csv" name="groupOfDefaultRadios" value="csv" checked>
+                <label class="custom-control-label" for="csv">csv</label>
+            </div>
+
+            <br>
+
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="json" name="groupOfDefaultRadios" value="json">
+                <label class="custom-control-label" for="json">json</label>
+            </div>
+
+            <br>
+
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="xml" name="groupOfDefaultRadios" value="xml">
+                <label class="custom-control-label" for="xml">xml</label>
+            </div>
+
+            <br>
+
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="xlsx" name="groupOfDefaultRadios" value="xlsx">
+                <label class="custom-control-label" for="xlsx">xlsx</label>
+            </div>
+
+
+            <br>
+            <br>
+            <b>Please select the collections you wish to export:</b>
+            <br>
+            <br>
+
+
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id ="projects" value="projects" name="projects">
+                <label class="custom-control-label" for="projects">Projects</label>
+            </div>
+
+            <br>
+
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id ="users" value="users" name="users">
+                <label class="custom-control-label" for="users">Users</label>
+            </div>
+
+            <br>
+
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id ="tasks" value="tasks" name="tasks">
+                <label class="custom-control-label" for="tasks">Tasks</label>
+            </div>
+
+            <br>
+
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id ="statuses" value="statuses" name="statuses">
+                <label class="custom-control-label" for="statuses">Statuses</label>
+            </div>
+
+            <br>
+
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id ="journals" value="journals" name="journals">
+                <label class="custom-control-label" for="journals">Journals</label>
+            </div>
+
+
+
+
+            </select>
+            <br>
+            <div class="col-sm-1">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
 
 </body>

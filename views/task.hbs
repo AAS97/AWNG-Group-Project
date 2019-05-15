@@ -51,8 +51,10 @@
                 <thead>
                 <tr>
                     <th scope="col">Author</th>
-                    <th scope="col">Date</th>
                     <th scope="col">Entry</th>
+                    <th scope="col">Date</th>
+
+
                 </tr>
                 </thead>
 
@@ -62,8 +64,9 @@
 
                     <tr>
                         <td>{{this.author.name}} {{this.author.lastname}}</td>
-                        <td>{{this.date}}</td>
                         <td>{{this.entry}}</td>
+                        <td>{{this.formatted_date}}</td>
+
                     </tr>
 
                 {{/each}}

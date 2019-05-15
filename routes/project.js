@@ -32,7 +32,7 @@ router.get('/add', async function(req, res){
     else {
         //display new project form
         var members = await userController.getAllUsers(req, res);
-        res.render('project_form', {members : members});
+        res.render('new_project', {members : members});
     }
 });
 
@@ -45,7 +45,7 @@ router.get('/:projectId/add', async function(req,res){
     else {
         //display new task form
         var [project, tasks] = await projectController.getProject(req,res);
-       var status = await statusModel.find().exec();
+       var status = await statusModel.find({name :{$ne : "Nouveau"}}).exec();
        res.render('new_task',{object : project, status : status});
 
     }
@@ -82,6 +82,16 @@ router.post('/:projectId/modify', async function(req,res){
     else {
         await projectController.editProject(req,res);
         res.redirect('/project/'+req.params.projectId);
+    }
+});
+
+router.get('/:projectId/delete', async function(req, res){
+    if (!req.session.user_id){
+        res.redirect('/auth');
+    }
+    else{
+        await projectController.deleteProject(req,res);
+        res.redirect('/project/');
     }
 });
 

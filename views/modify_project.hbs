@@ -18,11 +18,16 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="members">Select list:</label>
+                    <label for="members">Select members in the list:</label>
                     <select multiple class="form-control" name="members" id="members">
-                        {{# each members}}
+                        {{# each project.members}}
+                            <option selected="selected">{{this.firstname}} {{this.name}}</option>
+                        {{/each}}
+                        {{# each other_users}}
                             <option>{{this.firstname}} {{this.name}}</option>
                         {{/each}}
+
+
                     </select>
                 </div>
 
