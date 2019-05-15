@@ -94,6 +94,8 @@
                     </tbody>
                 </table>
 
+                <div style="border:1px solid black;">
+
 
                 <h1>Tasks of the project of my choice</h1>
 
@@ -108,7 +110,6 @@
                     </select>
                 </div>
 
-                <div style="border:1px solid black;">
 
                 <h3>My tasks of this project</h3>
 
@@ -192,6 +193,7 @@
 
 <script>
 
+    // Fonction permettant de filter les tâches en fonction du nom du projet pour les tâches d'un utilisateur
     function filter() {
         var input, filter, table, tr, td, i, txtValue;
         input = document.getElementById("project");
@@ -211,6 +213,7 @@
         }
     }
 
+    // Fonction permettant de filter les tâches en fonction du nom du projet pour les tâches des autres utilisateurs
     function filter2() {
         var input, filter, table, tr, td, i, txtValue;
         input = document.getElementById("project");

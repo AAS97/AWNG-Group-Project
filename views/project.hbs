@@ -89,8 +89,6 @@
             </table>
             <a href="/project/{{project._id}}/add" class="btn btn-primary btn-lg active" role="button" aria-pressed="true" style="margin-bottom : 10px">Add new task to the project</a>
 
-        </div>
-    </div>
 
 
 <h2>Gantt Diagramm of {{project.name}}</h2>
@@ -100,16 +98,16 @@
 <div id="container"></div>
 
 <h2>BurnDown Chart of {{project.name}}</h2>
-<
 <div id="burndown"></div>
+
+    </div>
+</div>
 
 
 <script src="https://code.highcharts.com/gantt/highcharts-gantt.js"></script>
 
-
 <script>
-
-    // THE CHART
+    // Script permettant de créer un diagramme de Gantt
     Highcharts.ganttChart('container', {
 
         xAxis: {
@@ -126,13 +124,11 @@
             {{/each}}]
         }]
     });
-
 </script>
 
-
 <script>
-
-                Highcharts.chart('burndown', {
+    // Script permettant de créer un diagramme d'avencement
+    Highcharts.chart('burndown', {
                     chart: {
                         zoomType: 'x'
                     },
@@ -149,7 +145,9 @@
                     yAxis: {
                         title: {
                             text: 'Remaining Effort'
-                        }
+                        },
+                        min: 0,
+                        max: 1,
                     },
                     legend: {
                         enabled: false
@@ -178,10 +176,16 @@
                                 }
                             },
                             threshold: null
+                        },
+                        line :{
+                            marker: {
+                                radius: 10
+                            }
                         }
                     },
 
                     series: [{
+                        type: 'area',
                         name: 'Ideal Remaining Effort',
                         data:  [{{#each project.datas}}
                             {x: Date.UTC({{this.date}}),y: {{this.value}} },
@@ -195,8 +199,6 @@
                         }
                     ]
                 })
-
-
 </script>
 
 

@@ -9,7 +9,7 @@ const { sanitizeBody } = require('express-validator/filter');
 
 var moment = require('moment');
 
-
+//Fonction déterminant la date de début et de fin d'un projet, et la date du jour
 findDate= async function(project,tasks){
     // Détermination de la date de début de projet
     for (var j = 0; j < tasks.length; j++){
@@ -35,8 +35,13 @@ findDate= async function(project,tasks){
     }
     project.diagramm_due_date = await moment(project_due_date).format('YYYY, MM-1, DD');
 
+    //Ajout de la date du jour
+    var today = new Date();
+    project.today= await moment(today).format('YYYY, MM-1, DD');
 }
 
+
+//Fonction déterminant l'avancement d'un projet
 findProgress= async function(project,tasks){
     var progress=0;
     for (var j = 0; j < tasks.length; j++){
@@ -45,44 +50,48 @@ findProgress= async function(project,tasks){
     project.progress = Math.round(progress/tasks.length);
 }
 
+//Fonction permettant de construire un diagramme d'avancement
 findBurndown = async function(project,tasks){
+
+    //Récupère l'ensemble des dates de début et de fin des tâches
     var dates = [];
-    var data = [];
     for (var j = 0; j < tasks.length; j++){
         dates[2*j]=tasks[j].start_date;
         dates[2*j+1]=tasks[j].due_date;
     }
 
+    // Trie ces dates par ordre chronologique par tri par insertion
     for (var j = 0; j < dates.length; j++){
         var current=dates[j];
         var current_c=new Date(dates[j]);
         for (var i = j; i > 0  ; i--){
-            if (new Date(dates[i-1]) > current_c){
-                dates[i] = dates[i-1];
-            }
+            if (new Date(dates[i-1]) > current_c){ dates[i] = dates[i-1];}
             else{break;}
         }
         dates[i]=current;
     }
 
-        for (var j = 0; j < dates.length; j++){
+    // Détermine l'avancement attendu pour chacune des dates de ci-dessus en considérant que
+    // chaque tâche a le même poids et que l'avancement dans une tâche suit une loi linéaire
+    var data = [];
+    for (var j = 0; j < dates.length; j++){
         var date_current=new Date(dates[j]);
         var current_data=0;
         for (var i = 0; i < tasks.length; i++){
             var date_start=new Date(tasks[i].start_date);
             var date_due=new Date(tasks[i].due_date);
             if (date_current<=date_due){
-                if (date_current<= date_start){
-                    current_data=current_data+1;
-                }
-                else{
-                    current_data=current_data+(date_due-date_current)/(date_due-date_start);
-                }
+                // Si la date n'est pas commencée il reste 100% du travail à faire
+                if (date_current<= date_start){ current_data=current_data+1;}
+                // Si on est en cours de réalisation, on suit une loi linéaire
+                else{current_data=current_data+(date_due-date_current)/(date_due-date_start);}
             }
 
         }
         data[j]=current_data/(tasks.length);
     }
+
+    // Insére en attribut du projet ces données d'avancement comme une liste de couple
     var datas=[];
     for (var j = 0; j < dates.length; j++){
         datas[j]={ date : await moment(dates[j]).format('YYYY, MM-1, DD'), value : data[j]};

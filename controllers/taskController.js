@@ -11,12 +11,15 @@ var userController = require('../controllers/userController');
 
 var moment = require('moment');
 
+// Fonction créant des formats simplifiés de date
 formatDate= async function(tasks){
+    // Créé un format qui sert à l'affichage
     for (var j = 0; j < tasks.length; j++){
         tasks[j].formatted_start_date = await moment(tasks[j].start_date).format('YYYY-MM-DD');
         tasks[j].formatted_due_date = await moment(tasks[j].due_date).format('YYYY-MM-DD');
     }
 
+    // Créé un format qui sert à la construction des graphiques
     for (var j = 0; j < tasks.length; j++){
         tasks[j].diagramm_start_date = await moment(tasks[j].start_date).format('YYYY, MM-1, DD');
         tasks[j].diagramm_due_date = await moment(tasks[j].due_date).format('YYYY, MM-1, DD');
@@ -40,6 +43,8 @@ exports.getUserTasks = async function(req, res){
 
 };
 
+
+// Retourne toutes les tâches qui n'appartiennent pas un utilisateur
 exports.getOtherUserTasks = async function(req, res){
     var tasks = await taskModel.find({assignee : {$ne: req.session.user_id}})
         .populate({path : 'assignee', model: userModel, select : 'firstname name'})
@@ -56,7 +61,7 @@ exports.getOtherUserTasks = async function(req, res){
 
 };
 
-
+// Retourne les tâches fini d'un utilisateur
 exports.getUserFinishedTasks = async function(req, res){
     var status  = await statusModel.findOne({name : 'Terminé'})
         .catch(function (err) {
