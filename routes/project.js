@@ -42,7 +42,7 @@ router.get('/:projectId/add', async function(req,res){
     else {
         //display new task form
         var [project, tasks] = await projectController.getProject(req,res);
-       var status = await statusModel.find().exec();
+       var status = await statusModel.find({name :{$ne : "Nouveau"}}).exec();
        res.render('new_task',{object : project, status : status});
 
     }
