@@ -29,8 +29,10 @@ exports.getProject = async function(req, res) {
         });
    var tasks = await taskController.getProjectTasks(req, res);
 
-   var project_start_date=tasks[0].start_date;
    for (var j = 0; j < tasks.length; j++){
+       if (j==0){
+           var project_start_date=tasks[0].start_date;
+       }
        var date_p=new Date(project_start_date);
        var date_c=new Date(tasks[j].start_date);
        if (date_p > date_c){
@@ -39,8 +41,10 @@ exports.getProject = async function(req, res) {
     }
    var project_diagramm_start_date = await moment(project_start_date).format('YYYY, MM-1, DD');
 
-    var project_due_date=tasks[0].due_date;
     for (var j = 0; j < tasks.length; j++){
+        if (j==0){
+            var project_due_date=tasks[0].due_date;
+        }
         var date_p=new Date(project_due_date);
         var date_c=new Date(tasks[j].due_date);
         if (date_p < date_c){

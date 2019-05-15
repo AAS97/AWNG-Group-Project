@@ -41,7 +41,7 @@ router.get('/:projectId/add', async function(req,res){
     }
     else {
         //display new task form
-       var [project, tasks] = await projectController.getProject(req,res);
+        var [project, tasks, project_diagramm_start_date, project_diagramm_due_date] = await projectController.getProject(req,res);
        var status = await statusModel.find().exec();
        res.render('new_task',{object : project, status : status});
 
@@ -55,7 +55,7 @@ router.post('/:projectId/add', async function(req,res){
     else {
         //get form results
         await taskController.addNewTask(req, res);
-        var [project, tasks] = await projectController.getProject(req,res);
+        var [project, tasks, project_diagramm_start_date, project_diagramm_due_date] = await projectController.getProject(req,res);
         res.render('project',{object : project, tasks : tasks});
     }
 });
@@ -66,7 +66,7 @@ router.get('/:projectId/modify', async function(req,res){
     }
     else {
         //display modify form
-        var [project, tasks] = projectController.getProject(req,res);
+        var [project, tasks, project_diagramm_start_date, project_diagramm_due_date] = await projectController.getProject(req,res);
         res.render('modify_project',{project : project});
 
     }
