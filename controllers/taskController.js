@@ -11,6 +11,18 @@ var userController = require('../controllers/userController');
 
 var moment = require('moment');
 
+formatDate= async function(tasks){
+    for (var j = 0; j < tasks.length; j++){
+        tasks[j].formatted_start_date = await moment(tasks[j].start_date).format('YYYY-MM-DD');
+        tasks[j].formatted_due_date = await moment(tasks[j].due_date).format('YYYY-MM-DD');
+    }
+
+    for (var j = 0; j < tasks.length; j++){
+        tasks[j].diagramm_start_date = await moment(tasks[j].start_date).format('YYYY, MM-1, DD');
+        tasks[j].diagramm_due_date = await moment(tasks[j].due_date).format('YYYY, MM-1, DD');
+    }
+}
+
 // return list of projects in which logged user is implied
 exports.getUserTasks = async function(req, res){
     var tasks = await taskModel.find({assignee : req.session.user_id})
@@ -22,15 +34,7 @@ exports.getUserTasks = async function(req, res){
                 res.render('error', {message : 'error getting all user tasks', error : err});
         });
 
-    for (var j = 0; j < tasks.length; j++){
-        tasks[j].formatted_start_date = await moment(tasks[j].start_date).format('YYYY-MM-DD');
-        tasks[j].formatted_due_date = await moment(tasks[j].due_date).format('YYYY-MM-DD');
-    }
-
-    for (var j = 0; j < tasks.length; j++){
-        tasks[j].diagramm_start_date = await moment(tasks[j].start_date).format('YYYY, MM-1, DD');
-        tasks[j].diagramm_due_date = await moment(tasks[j].due_date).format('YYYY, MM-1, DD');
-    }
+    await formatDate(tasks);
 
     return(tasks);
 
@@ -46,15 +50,7 @@ exports.getOtherUserTasks = async function(req, res){
             res.render('error', {message : 'erreur getting projects', error : err});
         });
 
-    for (var j = 0; j < tasks.length; j++){
-        tasks[j].formatted_start_date = await moment(tasks[j].start_date).format('YYYY-MM-DD');
-        tasks[j].formatted_due_date = await moment(tasks[j].due_date).format('YYYY-MM-DD');
-    }
-
-    for (var j = 0; j < tasks.length; j++){
-        tasks[j].diagramm_start_date = await moment(tasks[j].start_date).format('YYYY, MM-1, DD');
-        tasks[j].diagramm_due_date = await moment(tasks[j].due_date).format('YYYY, MM-1, DD');
-    }
+    await formatDate(tasks);
 
     return(tasks);
 
@@ -76,15 +72,7 @@ exports.getUserFinishedTasks = async function(req, res){
             res.render('error', {message : 'error getting finished tasks', error : err});
         });
 
-    for (var j = 0; j < tasks.length; j++){
-        tasks[j].formatted_start_date = await moment(tasks[j].start_date).format('YYYY-MM-DD');
-        tasks[j].formatted_due_date = await moment(tasks[j].due_date).format('YYYY-MM-DD');
-    }
-
-    for (var j = 0; j < tasks.length; j++){
-        tasks[j].diagramm_start_date = await moment(tasks[j].start_date).format('YYYY, MM-1, DD');
-        tasks[j].diagramm_due_date = await moment(tasks[j].due_date).format('YYYY, MM-1, DD');
-    }
+    await formatDate(tasks);
 
     return(tasks);
 
@@ -99,16 +87,22 @@ exports.getProjectTasks = async function(req, res){
                 res.render('error', {message : 'error getting project tasks', error : err});
         });
 
-    for (var j = 0; j < tasks.length; j++){
-        tasks[j].formatted_start_date = await moment(tasks[j].start_date).format('YYYY-MM-DD');
-        tasks[j].formatted_due_date = await moment(tasks[j].due_date).format('YYYY-MM-DD');
-    }
+    await formatDate(tasks);
 
-    for (var j = 0; j < tasks.length; j++){
-        tasks[j].diagramm_start_date = await moment(tasks[j].start_date).format('YYYY, MM-1, DD');
-        tasks[j].diagramm_due_date = await moment(tasks[j].due_date).format('YYYY, MM-1, DD');
-    }
+    return(tasks);
 
+};
+
+exports.getProjectTasksId = async function(projectId){
+    var tasks = await taskModel.find({project : projectId})
+        .populate({path : 'assignee', model: userModel, select : 'firstname name'})
+        .populate({path: 'status', model : statusModel})
+        .catch(function (err) {
+            console.log(err);
+            res.render('error', {message : 'error getting project tasks', error : err});
+        });
+
+    await formatDate(tasks);
 
     return(tasks);
 
