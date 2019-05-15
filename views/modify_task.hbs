@@ -23,10 +23,10 @@
 
                 <div class="form-group">
                     <label for="assignee">Assigned to:</label>
-                    <select class="form-control" name="assignee" id="assignee">
-                        <option selected="selected">{{task.assignee.firstname}} {{task.assignee.name}}</option>
+                    <select class="form-control" name="assignee" id="assignee" onload="selectMember()">
+                        <!--<option selected="selected">{{task.assignee.firstname}} {{task.assignee.name}}</option>-->
                         {{# each project.members}}
-                            <option>{{this.firstname}} {{this.name}}</option>
+                            <option id={{this.first}}>{{this.firstname}} {{this.name}}</option>
                         {{/each}}
                     </select>
                 </div>
@@ -68,5 +68,9 @@
 <script>
     function updateTextInput(val) {
         document.getElementById('sliderValue').value=val;
+    }
+
+    function selectMember(){
+        document.getElementById({{task.assignee.name}}).selected="selected";
     }
 </script>

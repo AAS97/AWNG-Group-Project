@@ -149,7 +149,7 @@ exports.addNewTask = async function(req, res){
 };
 
 exports.editTask = async function(req, res){
-    // create a new task object and save it on the db
+    // get task on db, modify it before saving
     // is called by Post method
     var status = await statusModel.findOne({name : req.body.status})
         .catch(function(err) {

@@ -33,7 +33,8 @@ router.get('/:taskId/modify', async function(req,res){
         var status = await statusModel.find().exec();
         res.render('modify_task',{task : task, project : project, status :status});
 
-    }});
+    }
+});
 
 router.get('/:taskId/delete', async function(req, res){
     if (!req.session.user_id){
