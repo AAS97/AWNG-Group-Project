@@ -39,22 +39,21 @@ exports.getProject = async function(req, res) {
            project_start_date=tasks[j].start_date;
        }
     }
-   var project_diagramm_start_date = await moment(project_start_date).format('YYYY, MM-1, DD');
-
+    project.diagramm_start_date = await moment(project_start_date).format('YYYY, MM-1, DD');
+    // Détermination de la date de début de projet
     for (var j = 0; j < tasks.length; j++){
         if (j==0){
             var project_due_date=tasks[0].due_date;
         }
         var date_p=new Date(project_due_date);
         var date_c=new Date(tasks[j].due_date);
-        if (date_p < date_c){
-            project_due_date=tasks[j].due_date;
-        }
+        if (date_p < date_c){ project_due_date=tasks[j].due_date; }
     }
-    var project_diagramm_due_date = await moment(project_due_date).format('YYYY, MM-1, DD');
+    // Détermination de la date de fin de projet
+    project.diagramm_due_date = await moment(project_due_date).format('YYYY, MM-1, DD');
 
 
-    return([project, tasks,project_diagramm_start_date,project_diagramm_due_date]);
+    return([project, tasks]);
 
 };
 
