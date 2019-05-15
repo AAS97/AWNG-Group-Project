@@ -6,6 +6,8 @@ var projectController = require('../controllers/projectController');
 var userController = require('../controllers/userController');
 var taskController = require('../controllers/taskController');
 
+var moment = require('moment');
+
 /* GET home page. */
 router.get('/', async function(req, res) {
     if (!req.session.user_id){
@@ -67,6 +69,14 @@ router.get('/:projectId',async function(req, res) {
         var [project, tasks] = await projectController.getProject(req,res);
         var users = await projectController.getProjectUsers(req,res);
         var status = await taskController.getAllStatus(req,res);
+
+
+        for (var j = 0; j < tasks.length; j++){
+
+            tasks[j].formatted_start_date = await moment(tasks[j].start_date).format('DD-MM-YYYY');
+            tasks[j].formatted_due_date = await moment(tasks[j].due_date).format('DD-MM-YYYY');
+        }
+
         res.render('project',{object : project, tasks : tasks, users:users, status:status});
 
     }});

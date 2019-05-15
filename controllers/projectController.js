@@ -37,7 +37,6 @@ exports.getProjectUsers = async function(req, res) {
             res.render('error', {message: 'erreur getting users', error: err});
         });
     var users = project.members;
-    console.log("Users"+ users);
     return(users);
 
 };
