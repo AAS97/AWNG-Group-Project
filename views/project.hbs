@@ -147,3 +147,39 @@
 
 </script>
 
+
+
+<script src="https://code.highcharts.com/gantt/highcharts-gantt.js"></script>
+
+<div id="container"></div>
+
+<script>
+
+
+
+
+    // THE CHART
+    Highcharts.ganttChart('container', {
+        title: {
+            text: 'Gantt Diagramm'
+        },
+        xAxis: {
+            min: Date.UTC({{project_diagramm_start_date}}),
+            max: Date.UTC({{project_diagramm_due_date}})
+        },
+
+        series: [{
+            name: 'Project 1',
+            data: [ {{#each tasks}}
+                {name: "{{this.name}}",
+                    start: Date.UTC({{this.diagramm_start_date}}),
+                    end: Date.UTC({{this.diagramm_due_date}}),
+                    completed: 0.25},
+            {{/each}}]
+        }]
+    });
+
+</script>
+
+
+

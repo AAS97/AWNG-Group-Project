@@ -7,6 +7,9 @@ var userController = require('../controllers/userController');
 const { body,validationResult } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
 
+var moment = require('moment');
+
+
 // return list of projects in which logged user is implied
 exports.getUserProjects = async function(req, res){
     var projects = await projectModel.find({members : req.session.user_id}).populate({path : 'members', model: userModel, select : 'firstname name'})
@@ -25,7 +28,29 @@ exports.getProject = async function(req, res) {
             res.render('error', {message: 'erreur getting projects', error: err});
         });
    var tasks = await taskController.getProjectTasks(req, res);
-   return([project, tasks]);
+
+   var project_start_date=tasks[0].start_date;
+   for (var j = 0; j < tasks.length; j++){
+       var date_p=new Date(project_start_date);
+       var date_c=new Date(tasks[j].start_date);
+       if (date_p > date_c){
+           project_start_date=tasks[j].start_date;
+       }
+    }
+   var project_diagramm_start_date = await moment(project_start_date).format('YYYY, MM-1, DD');
+
+    var project_due_date=tasks[0].due_date;
+    for (var j = 0; j < tasks.length; j++){
+        var date_p=new Date(project_due_date);
+        var date_c=new Date(tasks[j].due_date);
+        if (date_p < date_c){
+            project_due_date=tasks[j].due_date;
+        }
+    }
+    var project_diagramm_due_date = await moment(project_due_date).format('YYYY, MM-1, DD');
+
+
+    return([project, tasks,project_diagramm_start_date,project_diagramm_due_date]);
 
 };
 

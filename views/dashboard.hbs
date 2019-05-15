@@ -31,9 +31,8 @@
 
                     </tbody>
                 </table>
-                <a href="/project/add" class="btn btn-primary btn-lg active" role="button" aria-pressed="true" style="margin-bottom : 10px">Add new project</a>
 
-                <h1>My tasks</h1>
+                <h1 id="try">My tasks</h1>
                 <table class="table table-hover">
                     <thead>
                     <tr>
@@ -43,8 +42,6 @@
                         <th scope="col">Status</th>
                         <th scope="col">Start date</th>
                         <th scope="col">Due date</th>
-                        <th scope="col">Edit task</th>
-                        <th scope="col">Delete task</th>
                     </tr>
                     </thead>
 
@@ -60,8 +57,6 @@
                             <td>{{this.status.name}}</td>
                             <td>{{this.formatted_start_date}}</td>
                             <td>{{this.formatted_due_date}}</td>
-                            <td><a href="/task/{{this._id}}/modify"><i class="fas fa-edit"></i></a></td>
-                            <td><a href="/task/{{this._id}}/delete"><i class="fas fa-trash-alt"></i></a></td>
 
                         </tr>
 
@@ -80,8 +75,6 @@
                         <th scope="col">Status</th>
                         <th scope="col">Start date</th>
                         <th scope="col">Due date</th>
-                        <th scope="col">Edit task</th>
-                        <th scope="col">Delete task</th>
                     </tr>
                     </thead>
 
@@ -95,8 +88,6 @@
                             <td>{{this.status.name}}</td>
                             <td>{{this.formatted_start_date}}</td>
                             <td>{{this.formatted_due_date}}</td>
-                            <td><a href="/task/{{this._id}}/modify"><i class="fas fa-edit"></i></a></td>
-                            <td><a href="/task/{{this._id}}/delete"><i class="fas fa-trash-alt"></i></a></td>
                         </tr>
                     {{/each}}
 
@@ -109,7 +100,7 @@
                 <!-- To Search by project -->
                 <div class="form-group">
                     <label for="project">Project:</label>
-                    <select class="form-control" name="project" id="project"  onchange="myFunction(),myFunction2()" value = "">
+                    <select class="form-control" name="project" id="project"  onchange="filter(),filter2()" value = "">
                         <option></option>
                         {{# each projects}}
                             <option>{{this.name}}</option>
@@ -125,12 +116,10 @@
                     <tr>
                         <th scope="col">Name</th>
                         <th scope="col">Description</th>
-                        <th scope="col">Project</th>
+                        <th scope="col" style="display:none;">Project</th>
                         <th scope="col">Status</th>
                         <th scope="col">Start date</th>
                         <th scope="col">Due date</th>
-                        <th scope="col">Edit task</th>
-                        <th scope="col">Delete task</th>
                     </tr>
                     </thead>
 
@@ -142,12 +131,10 @@
 
                             <td> <a href="/task/{{this._id}}">{{this.name}}</a></td>
                             <td>{{this.desciption}}</td>
-                            <td>{{this.project.name}}</td>
+                            <td style="display:none;">{{this.project.name}}</td>
                             <td>{{this.status.name}}</td>
                             <td>{{this.formatted_start_date}}</td>
                             <td>{{this.formatted_due_date}}</td>
-                            <td><a href="/task/{{this._id}}/modify"><i class="fas fa-edit"></i></a></td>
-                            <td><a href="/task/{{this._id}}/delete"><i class="fas fa-trash-alt"></i></a></td>
 
 
                         </tr>
@@ -164,12 +151,11 @@
                     <tr>
                         <th scope="col">Name</th>
                         <th scope="col">Description</th>
-                        <th scope="col">Project</th>
+                        <th scope="col" style="display:none;">Project</th>
+                        <th scope="col">Assignee</th>
                         <th scope="col">Status</th>
                         <th scope="col">Start date</th>
                         <th scope="col">Due date</th>
-                        <th scope="col">Edit task</th>
-                        <th scope="col">Delete task</th>
                     </tr>
                     </thead>
 
@@ -181,12 +167,11 @@
 
                             <td> <a href="/task/{{this._id}}">{{this.name}}</a></td>
                             <td>{{this.desciption}}</td>
-                            <td>{{this.project.name}}</td>
+                            <td style="display:none;" >{{this.project.name}}</td>
+                            <td>{{this.assignee.firstname}} {{this.assignee.name}}</td>
                             <td>{{this.status.name}}</td>
                             <td>{{this.formatted_start_date}}</td>
                             <td>{{this.formatted_due_date}}</td>
-                            <td><a href="/task/{{this._id}}/modify"><i class="fas fa-edit"></i></a></td>
-                            <td><a href="/task/{{this._id}}/delete"><i class="fas fa-trash-alt"></i></a></td>
 
                         </tr>
 
@@ -205,7 +190,7 @@
 
 <script>
 
-    function myFunction() {
+    function filter() {
         var input, filter, table, tr, td, i, txtValue;
         input = document.getElementById("project");
         filter = input.value.toUpperCase();
@@ -224,7 +209,7 @@
         }
     }
 
-    function myFunction2() {
+    function filter2() {
         var input, filter, table, tr, td, i, txtValue;
         input = document.getElementById("project");
         filter = input.value.toUpperCase();

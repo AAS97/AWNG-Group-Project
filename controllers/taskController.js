@@ -27,6 +27,11 @@ exports.getUserTasks = async function(req, res){
         tasks[j].formatted_due_date = await moment(tasks[j].due_date).format('YYYY-MM-DD');
     }
 
+    for (var j = 0; j < tasks.length; j++){
+        tasks[j].diagramm_start_date = await moment(tasks[j].start_date).format('YYYY, MM-1, DD');
+        tasks[j].diagramm_due_date = await moment(tasks[j].due_date).format('YYYY, MM-1, DD');
+    }
+
     return(tasks);
 
 };
@@ -44,6 +49,11 @@ exports.getOtherUserTasks = async function(req, res){
     for (var j = 0; j < tasks.length; j++){
         tasks[j].formatted_start_date = await moment(tasks[j].start_date).format('YYYY-MM-DD');
         tasks[j].formatted_due_date = await moment(tasks[j].due_date).format('YYYY-MM-DD');
+    }
+
+    for (var j = 0; j < tasks.length; j++){
+        tasks[j].diagramm_start_date = await moment(tasks[j].start_date).format('YYYY, MM-1, DD');
+        tasks[j].diagramm_due_date = await moment(tasks[j].due_date).format('YYYY, MM-1, DD');
     }
 
     return(tasks);
@@ -70,6 +80,12 @@ exports.getUserFinishedTasks = async function(req, res){
         tasks[j].formatted_start_date = await moment(tasks[j].start_date).format('YYYY-MM-DD');
         tasks[j].formatted_due_date = await moment(tasks[j].due_date).format('YYYY-MM-DD');
     }
+
+    for (var j = 0; j < tasks.length; j++){
+        tasks[j].diagramm_start_date = await moment(tasks[j].start_date).format('YYYY, MM-1, DD');
+        tasks[j].diagramm_due_date = await moment(tasks[j].due_date).format('YYYY, MM-1, DD');
+    }
+
     return(tasks);
 
 };
@@ -87,6 +103,12 @@ exports.getProjectTasks = async function(req, res){
         tasks[j].formatted_start_date = await moment(tasks[j].start_date).format('YYYY-MM-DD');
         tasks[j].formatted_due_date = await moment(tasks[j].due_date).format('YYYY-MM-DD');
     }
+
+    for (var j = 0; j < tasks.length; j++){
+        tasks[j].diagramm_start_date = await moment(tasks[j].start_date).format('YYYY, MM-1, DD');
+        tasks[j].diagramm_due_date = await moment(tasks[j].due_date).format('YYYY, MM-1, DD');
+    }
+
 
     return(tasks);
 

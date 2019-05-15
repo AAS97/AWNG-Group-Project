@@ -64,10 +64,11 @@ router.get('/:projectId',async function(req, res) {
     }
     else {
         //display list of projects
-        var [project, tasks] = await projectController.getProject(req,res);
         var users = await projectController.getProjectUsers(req,res);
         var status = await taskController.getAllStatus(req,res);
-        res.render('project',{object : project, tasks : tasks, users:users, status:status});
+        var [project, tasks, project_diagramm_start_date, project_diagramm_due_date] = await projectController.getProject(req,res);
+        res.render('project',{object : project, tasks : tasks, users:users, status:status, project_diagramm_start_date : project_diagramm_start_date, project_diagramm_due_date : project_diagramm_due_date});
+
 
     }});
 
