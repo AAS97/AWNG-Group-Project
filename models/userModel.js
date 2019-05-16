@@ -1,4 +1,7 @@
-//define the user object coping data structure
+/*
+    File to define mongoose model for user
+*/
+
 
 var mongoose = require('mongoose');
 

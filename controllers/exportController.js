@@ -1,8 +1,13 @@
-const fs = require('fs');
-const json2csv = require('json2csv').parse;
-const path = require('path');
-const json2xml = require('json2xml');
-const mongoXlsx = require('mongo-xlsx');
+/*
+    This file contains all the functions regarding the export functionality.
+ */
+
+
+var fs = require('fs');
+var json2csv = require('json2csv').parse;
+var path = require('path');
+var json2xml = require('json2xml');
+var mongoXlsx = require('mongo-xlsx');
 
 
 //Function to display the export web page

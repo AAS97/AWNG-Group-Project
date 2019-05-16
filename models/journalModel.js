@@ -1,3 +1,7 @@
+/*
+    File to define mongoose model for journal
+*/
+
 mongoose = require('mongoose');
 
 var journalSchema = new mongoose.Schema({

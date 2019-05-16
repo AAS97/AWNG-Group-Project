@@ -1,3 +1,7 @@
+/*
+    Manage /task route i.e task management
+ */
+
 var express = require('express');
 var router = express.Router();
 
@@ -8,7 +12,7 @@ var userModel = require('../models/userModel');
 var taskController = require('../controllers/taskController');
 var journalController = require('../controllers/journalController');
 
-/* GET home page. */
+//Display list of tasks
 router.get('/', async function (req, res) {
     if (!req.session.user_id) {
         res.redirect('/auth');
@@ -20,6 +24,7 @@ router.get('/', async function (req, res) {
 
 });
 
+//Render task modify form
 router.get('/:taskId/modify', async function (req, res) {
     if (!req.session.user_id) {
         res.redirect('/auth');
@@ -39,6 +44,7 @@ router.get('/:taskId/modify', async function (req, res) {
     }
 });
 
+//Delete task
 router.get('/:taskId/delete', async function (req, res) {
     if (!req.session.user_id) {
         res.redirect('/auth');
@@ -48,6 +54,7 @@ router.get('/:taskId/delete', async function (req, res) {
     }
 });
 
+//Get form entry for task modification
 router.post('/:taskId/modify', async function (req, res) {
     if (!req.session.user_id) {
         res.redirect('/auth');
@@ -57,6 +64,7 @@ router.post('/:taskId/modify', async function (req, res) {
     }
 });
 
+//Display task details
 router.get('/:taskId', async function (req, res) {
     if (!req.session.user_id) {
         res.redirect('/auth');
@@ -68,6 +76,7 @@ router.get('/:taskId', async function (req, res) {
     }
 });
 
+//Creat new journal on this task
 router.post('/:taskId', async function (req, res) {
     if (!req.session.user_id) {
         res.redirect('/auth');

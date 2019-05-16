@@ -1,3 +1,7 @@
+/*
+    This file contains all the functions regarding user management.
+ */
+
 var userModel = require('../models/userModel');
 var projectModel = require('../models/projectModel');
 
@@ -9,17 +13,21 @@ const {body, validationResult} = require('express-validator/check');
 const {sanitizeBody} = require('express-validator/filter');
 
 
+//Function to display auth form
 exports.auth_get = function (req, res) {
     res.render('authentify');
 };
 
+//function to manage logout
 exports.auth_deco = function (req, res) {
     req.session.destroy();
     res.render('authentify');
 };
 
+//FUnction to authentify user on form entry
 exports.auth_post =
     [
+        //Sanitize form entries
         body('username', 'Username required').isLength({min: 1}).trim(),
         sanitizeBody('username').escape(),
 
@@ -57,6 +65,8 @@ exports.auth_post =
         }
     ];
 
+
+//Function to add new user on form post
 exports.addNewUser = [
     body('name', 'Name required').isLength({min: 1}),
     sanitizeBody('username').escape(),
@@ -110,6 +120,8 @@ exports.addNewUser = [
 
 ];
 
+
+//Function to display dashboard Page
 exports.get_home = async function (req, res) {
 
     //get user object
@@ -138,6 +150,8 @@ exports.get_home = async function (req, res) {
 
 };
 
+
+//Function listing all user of the app
 exports.getAllUsers = async function (req, res, callback) {
 
     var members = await userModel.find().select('name firstname')
@@ -150,6 +164,8 @@ exports.getAllUsers = async function (req, res, callback) {
     return (members);
 };
 
+
+//Function to get user Id on name and firstname
 exports.getUserId = async function ([firstname, name]) {
     var member = await userModel.findOne({name: name, firstname: firstname})
         .catch(function (err) {
@@ -161,6 +177,7 @@ exports.getUserId = async function ([firstname, name]) {
     return member._id;
 };
 
+//Function to get all user except project one
 exports.allUserExceptProjectMembers = async function (req, res) {
 
     var project = await projectModel.findById(req.params.projectId).select('members')

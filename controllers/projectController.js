@@ -1,5 +1,10 @@
+/*
+    This file contains all the functions regarding journals management.
+ */
+
 var projectModel = require('../models/projectModel');
 var userModel = require('../models/userModel');
+var taskModel = require('../models/taskModel');
 
 var taskController = require('../controllers/taskController');
 var userController = require('../controllers/userController');
@@ -9,9 +14,9 @@ const {sanitizeBody} = require('express-validator/filter');
 
 var moment = require('moment');
 
-//Fonction déterminant la date de début et de fin d'un projet, et la date du jour
+//Fonction to get project start/end date and date of the day
 findDate = async function (project, tasks) {
-    // Détermination de la date de début de projet
+    // Project start date
     for (var j = 0; j < tasks.length; j++) {
         if (j == 0) {
             var project_start_date = tasks[0].start_date;
@@ -24,7 +29,7 @@ findDate = async function (project, tasks) {
     }
     project.diagramm_start_date = await moment(project_start_date).format('YYYY, MM-1, DD');
 
-    // Détermination de la date de fin de projet
+    // Project end date
     for (var j = 0; j < tasks.length; j++) {
         if (j == 0) {
             var project_due_date = tasks[0].due_date;
@@ -37,13 +42,13 @@ findDate = async function (project, tasks) {
     }
     project.diagramm_due_date = await moment(project_due_date).format('YYYY, MM-1, DD');
 
-    //Ajout de la date du jour
+    //Today's date
     var today = new Date();
     project.today = await moment(today).format('YYYY, MM-1, DD');
 };
 
 
-//Fonction déterminant l'avancement d'un projet
+//Function to define project progress
 findProgress = async function (project, tasks) {
     var progress = 0;
     for (var j = 0; j < tasks.length; j++) {
@@ -52,17 +57,17 @@ findProgress = async function (project, tasks) {
     project.progress = Math.round(progress / tasks.length);
 };
 
-//Fonction permettant de construire un diagramme d'avancement
+//Function creating progress graph
 findBurndown = async function (project, tasks) {
 
-    //Récupère l'ensemble des dates de début et de fin des tâches
+    //Get all tasks dates
     var dates = [];
     for (var j = 0; j < tasks.length; j++) {
         dates[2 * j] = tasks[j].start_date;
         dates[2 * j + 1] = tasks[j].due_date;
     }
 
-    // Trie ces dates par ordre chronologique par tri par insertion
+    // Order by chronologic order
     for (var j = 0; j < dates.length; j++) {
         var current = dates[j];
         var current_c = new Date(dates[j]);
@@ -100,7 +105,7 @@ findBurndown = async function (project, tasks) {
         data[j] = current_data / (tasks.length);
     }
 
-    // Insére en attribut du projet ces données d'avancement comme une liste de couple
+    // Insert all this as data-couples as project attribute
     var datas = [];
     for (var j = 0; j < dates.length; j++) {
         datas[j] = {date: await moment(dates[j]).format('YYYY, MM-1, DD'), value: data[j]};
@@ -118,7 +123,7 @@ exports.getUserProjects = async function (req, res) {
     })
         .catch(function (err) {
             console.log(err);
-            res.render('error', {message: 'erreur getting projects', error: err});
+            res.render('error', {message: 'errot getting projects', error: err});
         });
     for (var j = 0; j < projects.length; j++) {
         var tasks = await taskController.getProjectTasksId(projects[j]._id);
@@ -137,7 +142,7 @@ exports.getProject = async function (req, res) {
     })
         .catch(function (err) {
             console.log(err);
-            res.render('error', {message: 'erreur getting projects', error: err});
+            res.render('error', {message: 'error getting projects', error: err});
         });
     var tasks = await taskController.getProjectTasks(req, res);
 
@@ -158,16 +163,16 @@ exports.getProjectUsers = async function (req, res) {
     })
         .catch(function (err) {
             console.log(err);
-            res.render('error', {message: 'erreur getting users', error: err});
+            res.render('error', {message: 'error getting project users', error: err});
         });
     var users = project.members;
     return (users);
 
 };
 
-
+//Function to add a new project to the db
 exports.addNewProject =
-    [
+    [   //Sanitize form entries
         body('project_name', 'Project name required').isLength({min: 1}).trim(),
         sanitizeBody('project_name').escape(),
 
@@ -181,7 +186,7 @@ exports.addNewProject =
             const errors = validationResult(req);
 
             if (!errors.isEmpty()) {
-                // There are errors. Render the form again with sanitized values/error messages.
+                // There are errors.
                 console.log('errors');
                 res.render('error', {errors: errors.array()});
             } else {
@@ -207,7 +212,7 @@ exports.addNewProject =
         }
     ];
 
-
+//Function to modify a given project infos
 exports.editProject = async function (req, res) {
     // get object on db, modify it and save it on the db
     // is called by Post method
@@ -223,5 +228,22 @@ exports.editProject = async function (req, res) {
     project.members = ids;
 
     project.save();
+
+};
+
+//Function to delete a project and all associated tasks
+exports.deleteProject = async function (req, res) {
+
+    var tasks = await taskController.getProjectTasks(req, res);
+
+    //delete all tasks one by one
+    for (var i = 0; i < tasks.length; i++) {
+        await taskModel.findByIdAndDelete(tasks[i]._id).catch(function (err) {
+            console.log(err);
+            res.render('error', {message: 'error deletion project tasks on project delete', error: err});
+        });
+    }
+
+    await projectModel.findByIdAndDelete(req.params.projectId);
 
 };

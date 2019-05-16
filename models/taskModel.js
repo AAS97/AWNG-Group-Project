@@ -1,3 +1,8 @@
+/*
+    File to define mongoose model for task
+*/
+
+
 var mongoose = require('mongoose');
 
 var taskSchema = new mongoose.Schema({

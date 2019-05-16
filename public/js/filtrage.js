@@ -1,3 +1,8 @@
+/*
+    Libraries of functions used in *.hbs to filter tables
+ */
+
+
 // Function used to filter individually, it doesn't take care of the other fields of the filtering
 // This function is used to compare chains of characters
 function filterIndividuel(tablePosition, Id) {
@@ -24,8 +29,8 @@ function filterIndividuel(tablePosition, Id) {
     }
 }
 
-// Function used in the colective function  to filter the differents elemetns of the table
-// it is used in the colective function
+// Function used in the collective function  to filter the differents elements of the table
+// it is used in the collective function
 function filterIndividuelV2(tablePosition, Id, iter) {
     var input, filter, table, tr, td, txtValue;
     input = document.getElementById(Id);

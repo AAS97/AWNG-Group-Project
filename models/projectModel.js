@@ -1,3 +1,8 @@
+/*
+    File to define mongoose model for project
+*/
+
+
 mongoose = require('mongoose');
 
 var projectSchema = new mongoose.Schema({

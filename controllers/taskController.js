@@ -1,3 +1,7 @@
+/*
+    This file contains all the functions regarding task management.
+ */
+
 var taskModel = require('../models/taskModel');
 var userModel = require('../models/userModel');
 var statusModel = require('../models/statusModel');
@@ -9,22 +13,22 @@ var userController = require('../controllers/userController');
 
 var moment = require('moment');
 
-// Fonction créant des formats simplifiés de date
+// Function to format dates
 formatDate = async function (tasks) {
-    // Créé un format qui sert à l'affichage
+    // Display format
     for (var j = 0; j < tasks.length; j++) {
         tasks[j].formatted_start_date = await moment(tasks[j].start_date).format('YYYY-MM-DD');
         tasks[j].formatted_due_date = await moment(tasks[j].due_date).format('YYYY-MM-DD');
     }
 
-    // Créé un format qui sert à la construction des graphiques
+    // Graphic creation format
     for (var j = 0; j < tasks.length; j++) {
         tasks[j].diagramm_start_date = await moment(tasks[j].start_date).format('YYYY, MM-1, DD');
         tasks[j].diagramm_due_date = await moment(tasks[j].due_date).format('YYYY, MM-1, DD');
     }
 };
 
-// return list of projects in which logged user is implied
+// Function to return list of projects in which logged user is implied
 exports.getUserTasks = async function (req, res) {
     var tasks = await taskModel.find({assignee: req.session.user_id})
         .populate({path: 'assignee', model: userModel, select: 'firstname name'})
@@ -42,7 +46,7 @@ exports.getUserTasks = async function (req, res) {
 };
 
 
-// Retourne toutes les tâches qui n'appartiennent pas un utilisateur
+// Function to get all tasks except user one
 exports.getOtherUserTasks = async function (req, res) {
     var tasks = await taskModel.find({assignee: {$ne: req.session.user_id}})
         .populate({path: 'assignee', model: userModel, select: 'firstname name'})
@@ -59,7 +63,7 @@ exports.getOtherUserTasks = async function (req, res) {
 
 };
 
-// Retourne les tâches fini d'un utilisateur
+// Function to get finished user tasks
 exports.getUserFinishedTasks = async function (req, res) {
     var status = await statusModel.findOne({name: 'Terminé'})
         .catch(function (err) {
@@ -81,6 +85,7 @@ exports.getUserFinishedTasks = async function (req, res) {
 
 };
 
+//Function to get all project's tasks
 exports.getProjectTasks = async function (req, res) {
     var tasks = await taskModel.find({project: req.params.projectId})
         .populate({path: 'assignee', model: userModel, select: 'firstname name'})
@@ -96,6 +101,7 @@ exports.getProjectTasks = async function (req, res) {
 
 };
 
+//Function to get all project's tasks by projectId
 exports.getProjectTasksId = async function (projectId) {
     var tasks = await taskModel.find({project: projectId})
         .populate({path: 'assignee', model: userModel, select: 'firstname name'})
@@ -132,7 +138,7 @@ exports.getTask = async function (req, res) {
 
 };
 
-
+//Function to add a new tasks on form entry
 exports.addNewTask = async function (req, res) {
     // create a new task object and save it on the db
     // is called by Post method
@@ -167,6 +173,7 @@ exports.addNewTask = async function (req, res) {
 
 };
 
+//Function to modify a task
 exports.editTask = async function (req, res) {
     // get task on db, modify it before saving
     // is called by Post method
@@ -198,6 +205,7 @@ exports.editTask = async function (req, res) {
 
 };
 
+//Function to delete a task
 exports.deleteTask = async function (req, res) {
     await taskModel.findByIdAndDelete(req.params.taskId)
         .catch(function (err) {
@@ -208,16 +216,6 @@ exports.deleteTask = async function (req, res) {
 
 //return de status that a task can have
 exports.getAllStatus = async function (req, res) {
-    var project = await projectModel.findById(req.params.projectId).populate({
-        path: 'members',
-        model: userModel,
-        select: 'firstname name'
-    })
-        .catch(function (err) {
-            console.log(err);
-            res.render('error', {message: 'error getting projects', error: err});
-        });
     var status = await statusModel.find();
     return (status);
-
 };

@@ -1,7 +1,12 @@
+/*
+    Manage / route and redirect
+ */
+
+
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
+//redirect to wanted page
 router.get('/', function (req, res) {
 
     if (!req.session.user_id) {

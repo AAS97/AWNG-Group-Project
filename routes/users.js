@@ -3,8 +3,7 @@ var router = express.Router();
 var userController = require('../controllers/userController');
 
 
-/* GET users listing. */
-
+// Display dashboard
 router.get('/:_id', (req, res) => {
     if (!req.session.user_id) {
         res.redirect('/');
@@ -17,6 +16,7 @@ router.post('/:_id', (req, res) => {
     res.redirect('/auth')
 });
 
+//redirect
 router.get('/', (req, res) => {
     if (!req.session.user_id) {
         res.redirect('/');

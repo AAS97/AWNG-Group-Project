@@ -1,3 +1,8 @@
+/*
+    Manage /project/ routes i.e. project control
+ */
+
+
 var express = require('express');
 var router = express.Router();
 
@@ -11,7 +16,7 @@ var taskController = require('../controllers/taskController');
 var moment = require('moment');
 
 
-/* GET home page. */
+//List all projects
 router.get('/', async function (req, res) {
     if (!req.session.user_id) {
         res.redirect('/auth');
@@ -24,6 +29,7 @@ router.get('/', async function (req, res) {
 
 });
 
+//Render new project form
 router.get('/add', async function (req, res) {
     if (!req.session.user_id) {
         res.redirect('/auth');
@@ -34,8 +40,11 @@ router.get('/add', async function (req, res) {
     }
 });
 
+//Add new project on form post
 router.post('/add', projectController.addNewProject);
 
+
+//Display new task form on this project
 router.get('/:projectId/add', async function (req, res) {
     if (!req.session.user_id) {
         res.redirect('/auth');
@@ -48,6 +57,7 @@ router.get('/:projectId/add', async function (req, res) {
     }
 });
 
+//Add new task to the project
 router.post('/:projectId/add', async function (req, res) {
     if (!req.session.user_id) {
         res.redirect('/auth');
@@ -59,6 +69,7 @@ router.post('/:projectId/add', async function (req, res) {
     }
 });
 
+//Display form to modify the project
 router.get('/:projectId/modify', async function (req, res) {
     if (!req.session.user_id) {
         res.redirect('/auth');
@@ -70,6 +81,7 @@ router.get('/:projectId/modify', async function (req, res) {
     }
 });
 
+//Modify the project on form post
 router.post('/:projectId/modify', async function (req, res) {
     if (!req.session.user_id) {
         res.redirect('/auth');
@@ -79,6 +91,7 @@ router.post('/:projectId/modify', async function (req, res) {
     }
 });
 
+//Delete the project
 router.get('/:projectId/delete', async function (req, res) {
     if (!req.session.user_id) {
         res.redirect('/auth');
@@ -88,11 +101,12 @@ router.get('/:projectId/delete', async function (req, res) {
     }
 });
 
+//Get detail page of the project
 router.get('/:projectId', async function (req, res) {
     if (!req.session.user_id) {
         res.redirect('/auth');
     } else {
-        //display list of projects
+        //display list of projects details
         var users = await projectController.getProjectUsers(req, res);
         var status = await taskController.getAllStatus(req, res);
         var [project, tasks] = await projectController.getProject(req, res);
