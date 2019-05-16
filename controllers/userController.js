@@ -107,7 +107,7 @@ exports.addNewUser = [
                         role: ['member']
 
                     });
-                    newUser.save();
+                    await newUser.save();
 
                     req.session.user_id = newUser._id;
                     res.redirect('/users/' + newUser._id);

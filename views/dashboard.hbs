@@ -6,95 +6,102 @@
             <div class="fakeimg"></div>
         </div>
         <div class="col-sm-10">
+            <h1>My Dashboard</h1>
             <div class="container-fluid">
-                <h1>My projects</h1>
-                <table class="table table-hover searchable sortable">
-                    <thead>
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">With</th>
-                    </tr>
-                    </thead>
-
-                    <tbody>
-
-                    {{#each projects}}
-
+                <div class="container-fluid" style="margin : 10px">
+                    <h1>My projects</h1>
+                    <table class="table table-hover searchable sortable">
+                        <thead>
                         <tr>
-
-                            <td><a href="/project/{{this._id}}">{{this.name}}</a></td>
-                            <td>{{#each this.members}}{{this.firstname}} {{this.name}}, {{/each}}</td>
-
+                            <th scope="col">Name</th>
+                            <th scope="col">With</th>
                         </tr>
+                        </thead>
 
-                    {{/each}}
+                        <tbody>
 
-                    </tbody>
-                </table>
+                        {{#each projects}}
 
-                <h1 id="try">My tasks</h1>
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Project</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Start date</th>
-                        <th scope="col">Due date</th>
-                    </tr>
-                    </thead>
+                            <tr>
 
-                    <tbody>
+                                <td><a href="/project/{{this._id}}">{{this.name}}</a></td>
+                                <td>{{#each this.members}}{{this.firstname}} {{this.name}}, {{/each}}</td>
 
-                    {{#each mytasks}}
+                            </tr>
 
+                        {{/each}}
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="container-fluid" style="margin : 10px">
+                    <h1 id="try">My tasks</h1>
+                    <table class="table table-hover">
+                        <thead>
                         <tr>
-
-                            <td><a href="/task/{{this._id}}">{{this.name}}</a></td>
-                            <td>{{this.desciption}}</td>
-                            <td>{{this.project.name}}</td>
-                            <td>{{this.status.name}}</td>
-                            <td>{{this.formatted_start_date}}</td>
-                            <td>{{this.formatted_due_date}}</td>
-
+                            <th scope="col">Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Project</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Start date</th>
+                            <th scope="col">Due date</th>
                         </tr>
+                        </thead>
 
-                    {{/each}}
+                        <tbody>
 
-                    </tbody>
-                </table>
+                        {{#each mytasks}}
 
-                <h1>My finished tasks</h1>
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Project</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Start date</th>
-                        <th scope="col">Due date</th>
-                    </tr>
-                    </thead>
+                            <tr>
 
-                    <tbody>
+                                <td><a href="/task/{{this._id}}">{{this.name}}</a></td>
+                                <td>{{this.description}}</td>
+                                <td>{{this.project.name}}</td>
+                                <td>{{this.status.name}}</td>
+                                <td>{{this.formatted_start_date}}</td>
+                                <td>{{this.formatted_due_date}}</td>
 
-                    {{#each myfinishedtasks}}
+                            </tr>
+
+                        {{/each}}
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="container-fluid" style="margin : 10px">
+                    <h1>My finished tasks</h1>
+                    <table class="table table-hover">
+                        <thead>
                         <tr>
-                            <td><a href="/task/{{this._id}}">{{this.name}}</a></td>
-                            <td>{{this.desciption}}</td>
-                            <td>{{this.project.name}}</td>
-                            <td>{{this.status.name}}</td>
-                            <td>{{this.formatted_start_date}}</td>
-                            <td>{{this.formatted_due_date}}</td>
+                            <th scope="col">Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Project</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Start date</th>
+                            <th scope="col">Due date</th>
                         </tr>
-                    {{/each}}
+                        </thead>
 
-                    </tbody>
-                </table>
+                        <tbody>
 
-                <div style="border:1px solid black;">
+                        {{#each myfinishedtasks}}
+                            <tr>
+                                <td><a href="/task/{{this._id}}">{{this.name}}</a></td>
+                                <td>{{this.description}}</td>
+                                <td>{{this.project.name}}</td>
+                                <td>{{this.status.name}}</td>
+                                <td>{{this.formatted_start_date}}</td>
+                                <td>{{this.formatted_due_date}}</td>
+                            </tr>
+                        {{/each}}
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="rounded" style="margin: 5px; padding : 5px; border: 1px solid black;">
 
 
                     <h1>Tasks of the project of my choice</h1>
@@ -132,7 +139,7 @@
                             <tr>
 
                                 <td><a href="/task/{{this._id}}">{{this.name}}</a></td>
-                                <td>{{this.desciption}}</td>
+                                <td>{{this.description}}</td>
                                 <td style="display:none;">{{this.project.name}}</td>
                                 <td>{{this.status.name}}</td>
                                 <td>{{this.formatted_start_date}}</td>
@@ -168,7 +175,7 @@
                             <tr>
 
                                 <td><a href="/task/{{this._id}}">{{this.name}}</a></td>
-                                <td>{{this.desciption}}</td>
+                                <td>{{this.description}}</td>
                                 <td style="display:none;">{{this.project.name}}</td>
                                 <td>{{this.assignee.firstname}} {{this.assignee.name}}</td>
                                 <td>{{this.status.name}}</td>

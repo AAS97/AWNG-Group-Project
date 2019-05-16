@@ -153,8 +153,8 @@ exports.addNewTask = async function (req, res) {
     if (!req.body.start_date) {
         req.body.start_date = new Date();
     }
-    if (!req.body.start_date) {
-        req.body.start_date = new Date();
+    if (!req.body.due_date) {
+        req.body.due_date = new Date();
     }
 
     var newTask = new taskModel({

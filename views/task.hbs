@@ -57,6 +57,7 @@
                     <th scope="col">Author</th>
                     <th scope="col">Entry</th>
                     <th scope="col">Date</th>
+                    <th scope="col">Delete</th>
 
 
                 </tr>
@@ -70,6 +71,7 @@
                         <td>{{this.author.name}} {{this.author.lastname}}</td>
                         <td>{{this.entry}}</td>
                         <td>{{this.formatted_date}}</td>
+                        <td><a href="/journal/{{task._id}}/{{this._id}}/delete"><i class="fas fa-trash-alt"></i></a></td>
 
                     </tr>
 

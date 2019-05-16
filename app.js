@@ -35,27 +35,14 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 
-//complicated hbs stuff
-/*
-var hbs = require('express-handlebars');
-app.engine( 'hbs', hbs( {
-  extname: 'hbs',
-  defaultLayout: 'layout',
-  layoutsDir: __dirname + '/hbs/layouts/',
-  partialsDir: __dirname + '/hbs/partials/'
-} ) );
-
-app.set('views', path.join(__dirname, '/hbs/views'));
-app.set( 'view engine', 'hbs' );
-*/
-
-// all the routers we need to manage use trafic
+// all the routers we need to manage use traffic
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var authRouter = require('./routes/auth');
 var projectRouter = require('./routes/project');
 var taskRouter = require('./routes/task');
-var exportRouteur = require('./routes/export');
+var exportRouter = require('./routes/export');
+var journalRouter = require('./routes/journal');
 
 
 app.use('/', indexRouter);
@@ -63,7 +50,8 @@ app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 app.use('/project', projectRouter);
 app.use('/task', taskRouter);
-app.use('/export', exportRouteur);
+app.use('/export', exportRouter);
+app.use('/journal', journalRouter);
 
 
 // connecting to our db served by mongoDB
