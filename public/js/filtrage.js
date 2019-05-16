@@ -1,4 +1,3 @@
-
 // Function used to filter individually, it doesn't take care of the other fields of the filtering
 // This function is used to compare chains of characters
 function filterIndividuel(tablePosition, Id) {
@@ -14,7 +13,7 @@ function filterIndividuel(tablePosition, Id) {
             // takes the String in that element
             txtValue = td.textContent || td.innerText;
             //Compare with the filter parameter
-            if (txtValue.toUpperCase().indexOf(filter) > -1 ) {
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
                 //if it's the same show it
                 tr[i].style.display = "";
             } else {
@@ -36,7 +35,7 @@ function filterIndividuelV2(tablePosition, Id, iter) {
     td = tr[iter].getElementsByTagName("td")[tablePosition];
     if (td) {
         txtValue = td.textContent || td.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1 ) {
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
             return true;
         } else {
             return false;
@@ -57,7 +56,7 @@ function dateFiltering(tablePosition, Id, selector) {
     for (i = 0; i < tr.length; i++) {
         td = tr[i].getElementsByTagName("td")[tablePosition];
         if (td && selector === "biggerThan") {
-            var date =  Date.parse(td.textContent);
+            var date = Date.parse(td.textContent);
             if (date >= dateFilter || Number.isNaN(dateFilter)) {
                 tr[i].style.display = "";
             } else {
@@ -66,7 +65,7 @@ function dateFiltering(tablePosition, Id, selector) {
         }
 
         if (td && selector === "smallerThan") {
-            var date =  Date.parse(td.textContent);
+            var date = Date.parse(td.textContent);
             if (date <= dateFilter || Number.isNaN(dateFilter)) {
                 tr[i].style.display = "";
             } else {
@@ -90,7 +89,7 @@ function dateFilteringV2(tablePosition, Id, selector, iter) {
     td = tr[iter].getElementsByTagName("td")[tablePosition];
 
     if (td && selector === "biggerThan") {
-        var date =  Date.parse(td.textContent);
+        var date = Date.parse(td.textContent);
         if (date >= dateFilter || Number.isNaN(dateFilter)) {
             return true;
         } else {
@@ -99,7 +98,7 @@ function dateFilteringV2(tablePosition, Id, selector, iter) {
     }
 
     if (td && selector === "smallerThan") {
-        var date =  Date.parse(td.textContent);
+        var date = Date.parse(td.textContent);
         if (date <= dateFilter || Number.isNaN(dateFilter)) {
             return true;
         } else {
@@ -110,18 +109,18 @@ function dateFilteringV2(tablePosition, Id, selector, iter) {
 
 
 // Function used to filter the table. it marge the results of the differents filters.
-function filterColective(tablePosTask,IdTask,tablePosAssignee,IdAssignee,tablePosStatus,IdStatus,tablePosStart,IdStartDate,tablePosDue,IdDueDate){
+function filterColective(tablePosTask, IdTask, tablePosAssignee, IdAssignee, tablePosStatus, IdStatus, tablePosStart, IdStartDate, tablePosDue, IdDueDate) {
     var table, tr, i;
 
     table = document.getElementById("myTable");
     tr = table.getElementsByTagName("tr");
 
     for (i = 1; i < tr.length; i++) {
-        let taskName =  filterIndividuelV2(tablePosTask,IdTask,i);
-        let assigneeName = filterIndividuelV2(tablePosAssignee, IdAssignee,i);
-        let statusName = filterIndividuelV2(tablePosStatus, IdStatus,i);
-        let startDate = dateFilteringV2(tablePosStart, IdStartDate,'biggerThan',i);
-        let dueDate = dateFilteringV2(tablePosDue, IdDueDate,'smallerThan',i);
+        let taskName = filterIndividuelV2(tablePosTask, IdTask, i);
+        let assigneeName = filterIndividuelV2(tablePosAssignee, IdAssignee, i);
+        let statusName = filterIndividuelV2(tablePosStatus, IdStatus, i);
+        let startDate = dateFilteringV2(tablePosStart, IdStartDate, 'biggerThan', i);
+        let dueDate = dateFilteringV2(tablePosDue, IdDueDate, 'smallerThan', i);
 
         if (taskName && assigneeName && statusName && startDate && dueDate) {
             tr[i].style.display = "";

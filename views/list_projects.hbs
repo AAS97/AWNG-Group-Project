@@ -25,7 +25,7 @@
 
                         <tr>
 
-                            <td> <a href="/project/{{this._id}}">{{this.name}}</a></td>
+                            <td><a href="/project/{{this._id}}">{{this.name}}</a></td>
                             <td>{{#each this.members}}{{this.firstname}} {{this.name}}, {{/each}}</td>
                             <td><a href="/project/{{this._id}}/modify"><i class="fas fa-edit"></i></a></td>
                             <td><a href="/project/{{this._id}}/delete"><i class="fas fa-trash-alt"></i></a></td>
@@ -36,13 +36,13 @@
 
                     </tbody>
                 </table>
-                <a href="/project/add" class="btn btn-primary btn-lg active" role="button" aria-pressed="true" style="margin-bottom : 10px">Add new project</a>
+                <a href="/project/add" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"
+                   style="margin-bottom : 10px">Add new project</a>
             </div>
 
 
-
-<h2>Gantt Diagramm of my Projects</h2>
-<div id="container"></div>
+            <h2>Gantt Diagramm of my Projects</h2>
+            <div id="container"></div>
 
         </div>
     </div>
@@ -55,10 +55,12 @@
     Highcharts.ganttChart('container', {
         series: [{
             data: [ {{#each object}}
-                {name: "{{this.name}}",
+                {
+                    name: "{{this.name}}",
                     start: Date.UTC({{this.diagramm_start_date}}),
                     end: Date.UTC({{this.diagramm_due_date}}),
-                    completed: {{this.progress}}*0.01},
+                    completed: {{this.progress}}* 0.01
+                },
             {{/each}}]
         }]
     });

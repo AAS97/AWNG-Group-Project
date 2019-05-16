@@ -9,7 +9,7 @@ router.get('/', userController.auth_get);
 
 router.post('/', userController.auth_post);
 
-router.get('/add', async function(req,res){
+router.get('/add', async function (req, res) {
     res.render('new_user');
 });
 

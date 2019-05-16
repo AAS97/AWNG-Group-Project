@@ -2,14 +2,13 @@ var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res) {
+router.get('/', function (req, res) {
 
-  if (!req.session.user_id){
-    res.redirect('/auth');
-  }
-  else {
-    res.redirect('/users/'+req.session.user_id);
-  }
+    if (!req.session.user_id) {
+        res.redirect('/auth');
+    } else {
+        res.redirect('/users/' + req.session.user_id);
+    }
 
 });
 

@@ -22,7 +22,7 @@
 
                         <tr>
 
-                            <td> <a href="/project/{{this._id}}">{{this.name}}</a></td>
+                            <td><a href="/project/{{this._id}}">{{this.name}}</a></td>
                             <td>{{#each this.members}}{{this.firstname}} {{this.name}}, {{/each}}</td>
 
                         </tr>
@@ -51,7 +51,7 @@
 
                         <tr>
 
-                            <td> <a href="/task/{{this._id}}">{{this.name}}</a></td>
+                            <td><a href="/task/{{this._id}}">{{this.name}}</a></td>
                             <td>{{this.desciption}}</td>
                             <td>{{this.project.name}}</td>
                             <td>{{this.status.name}}</td>
@@ -82,7 +82,7 @@
 
                     {{#each myfinishedtasks}}
                         <tr>
-                            <td> <a href="/task/{{this._id}}">{{this.name}}</a></td>
+                            <td><a href="/task/{{this._id}}">{{this.name}}</a></td>
                             <td>{{this.desciption}}</td>
                             <td>{{this.project.name}}</td>
                             <td>{{this.status.name}}</td>
@@ -97,98 +97,96 @@
                 <div style="border:1px solid black;">
 
 
-                <h1>Tasks of the project of my choice</h1>
+                    <h1>Tasks of the project of my choice</h1>
 
-                <!-- To Search by project -->
-                <div class="form-group">
-                    <label for="project">Project:</label>
-                    <select class="form-control" name="project" id="project"  onchange="filter(),filter2()" value = "">
-                        <option></option>
-                        {{# each projects}}
-                            <option>{{this.name}}</option>
+                    <!-- To Search by project -->
+                    <div class="form-group">
+                        <label for="project">Project:</label>
+                        <select class="form-control" name="project" id="project" onchange="filter(),filter2()" value="">
+                            <option></option>
+                            {{# each projects}}
+                                <option>{{this.name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+
+
+                    <h3>My tasks of this project</h3>
+
+                    <table id="myProjectTable" class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col" style="display:none;">Project</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Start date</th>
+                            <th scope="col">Due date</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+
+                        {{#each mytasks}}
+
+                            <tr>
+
+                                <td><a href="/task/{{this._id}}">{{this.name}}</a></td>
+                                <td>{{this.desciption}}</td>
+                                <td style="display:none;">{{this.project.name}}</td>
+                                <td>{{this.status.name}}</td>
+                                <td>{{this.formatted_start_date}}</td>
+                                <td>{{this.formatted_due_date}}</td>
+
+
+                            </tr>
+
                         {{/each}}
-                    </select>
-                </div>
 
+                        </tbody>
+                    </table>
 
-                <h3>My tasks of this project</h3>
+                    <h3>Others tasks of this project</h3>
 
-                <table id ="myProjectTable" class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Description</th>
-                        <th scope="col" style="display:none;">Project</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Start date</th>
-                        <th scope="col">Due date</th>
-                    </tr>
-                    </thead>
-
-                    <tbody>
-
-                    {{#each mytasks}}
-
+                    <table id="otherProjectTable" class="table table-hover">
+                        <thead>
                         <tr>
-
-                            <td> <a href="/task/{{this._id}}">{{this.name}}</a></td>
-                            <td>{{this.desciption}}</td>
-                            <td style="display:none;">{{this.project.name}}</td>
-                            <td>{{this.status.name}}</td>
-                            <td>{{this.formatted_start_date}}</td>
-                            <td>{{this.formatted_due_date}}</td>
-
-
+                            <th scope="col">Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col" style="display:none;">Project</th>
+                            <th scope="col">Assignee</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Start date</th>
+                            <th scope="col">Due date</th>
                         </tr>
+                        </thead>
 
-                    {{/each}}
+                        <tbody>
 
-                    </tbody>
-                </table>
+                        {{#each othersUsersTasks}}
 
-                <h3>Others tasks of this project</h3>
+                            <tr>
 
-                <table id ="otherProjectTable" class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Description</th>
-                        <th scope="col" style="display:none;">Project</th>
-                        <th scope="col">Assignee</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Start date</th>
-                        <th scope="col">Due date</th>
-                    </tr>
-                    </thead>
+                                <td><a href="/task/{{this._id}}">{{this.name}}</a></td>
+                                <td>{{this.desciption}}</td>
+                                <td style="display:none;">{{this.project.name}}</td>
+                                <td>{{this.assignee.firstname}} {{this.assignee.name}}</td>
+                                <td>{{this.status.name}}</td>
+                                <td>{{this.formatted_start_date}}</td>
+                                <td>{{this.formatted_due_date}}</td>
 
-                    <tbody>
+                            </tr>
 
-                    {{#each othersUsersTasks}}
+                        {{/each}}
 
-                        <tr>
-
-                            <td> <a href="/task/{{this._id}}">{{this.name}}</a></td>
-                            <td>{{this.desciption}}</td>
-                            <td style="display:none;" >{{this.project.name}}</td>
-                            <td>{{this.assignee.firstname}} {{this.assignee.name}}</td>
-                            <td>{{this.status.name}}</td>
-                            <td>{{this.formatted_start_date}}</td>
-                            <td>{{this.formatted_due_date}}</td>
-
-                        </tr>
-
-                    {{/each}}
-
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
                 </div>
 
             </div>
         </div>
     </div>
 </div>
-
-
 
 
 <script>

@@ -3,31 +3,31 @@ var userModel = require('../models/userModel');
 
 var moment = require('moment');
 
-exports.getTaskJournals = async function(req, res) {
+exports.getTaskJournals = async function (req, res) {
     var journals = await journalModel.find({task: req.params.taskId})
-        .sort({date: -1 })
+        .sort({date: -1})
         .populate({path: 'author', model: userModel, select: 'firstname name'})
         .catch(function (err) {
-                console.log(err);
-                res.render('error', {message: 'erreur getting journals', error: err});
-            });
+            console.log(err);
+            res.render('error', {message: 'erreur getting journals', error: err});
+        });
 
-    for (var j = 0; j < journals.length; j++){
+    for (var j = 0; j < journals.length; j++) {
         journals[j].formatted_date = await moment(journals[j].date).format('YYYY-MM-DD');
 
     }
 
-    return(journals);
+    return (journals);
 };
 
-exports.newJournal = async function (req, res){
-  var newJournal = new journalModel({
-      entry : req.body.entry,
-      task : req.params.taskId,
-      author : req.session.user_id
+exports.newJournal = async function (req, res) {
+    var newJournal = new journalModel({
+        entry: req.body.entry,
+        task: req.params.taskId,
+        author: req.session.user_id
     });
 
-  newJournal.save();
+    newJournal.save();
 
 };
 

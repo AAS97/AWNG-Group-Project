@@ -9,8 +9,10 @@
         <div class="container-fluid">
             <div class="row">
                 <h2 class="col-sm-3">Task's details</h2>
-                <a href="/task/{{task._id}}/delete" style="margin-bottom:10px; margin-right: 10px" class="btn btn-primary btn-lg active col-sm-2" role="button" aria-pressed="true" >Delete task</a>
-                <a href="/task/{{task._id}}/modify" style="margin-bottom: 10px" class="btn btn-primary btn-lg active col-sm-2" role="button" aria-pressed="true" >Modify task</a>
+                <a href="/task/{{task._id}}/delete" style="margin-bottom:10px; margin-right: 10px"
+                   class="btn btn-primary btn-lg active col-sm-2" role="button" aria-pressed="true">Delete task</a>
+                <a href="/task/{{task._id}}/modify" style="margin-bottom: 10px"
+                   class="btn btn-primary btn-lg active col-sm-2" role="button" aria-pressed="true">Modify task</a>
             </div>
 
             <table class="table table-hover">
@@ -27,20 +29,22 @@
                 </thead>
 
                 <tbody>
-                    <tr>
+                <tr>
 
-                        <td> <a href="/task/{{task._id}}">{{task.name}}</a></td>
-                        <td>{{task.description}}</td>
-                        <td><a href="/project/{{task.project._id}}">{{task.project.name}}</a></td>
-                        <td>{{task.status.name}}</td>
-                        <td>{{task.formatted_start_date}}</td>
-                        <td>{{task.formatted_due_date}}</td>
-                        <td>
-                            <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="{{task.progress}}" aria-valuemin="0" aria-valuemax="100">{{task.progress}}</div>
-                        </td>
+                    <td><a href="/task/{{task._id}}">{{task.name}}</a></td>
+                    <td>{{task.description}}</td>
+                    <td><a href="/project/{{task.project._id}}">{{task.project.name}}</a></td>
+                    <td>{{task.status.name}}</td>
+                    <td>{{task.formatted_start_date}}</td>
+                    <td>{{task.formatted_due_date}}</td>
+                    <td>
+                        <div class="progress-bar" role="progressbar" style="width: 25%;"
+                             aria-valuenow="{{task.progress}}" aria-valuemin="0"
+                             aria-valuemax="100">{{task.progress}}</div>
+                    </td>
 
 
-                    </tr>
+                </tr>
                 </tbody>
             </table>
         </div>

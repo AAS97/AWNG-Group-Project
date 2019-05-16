@@ -13,12 +13,14 @@
 
                 <div class="form-group">
                     <label for="task_name">Name of the task</label>
-                    <input type="string" class="form-control" name="task_name" placeholder="Enter new task's name" value="{{task.name}}">
+                    <input type="string" class="form-control" name="task_name" placeholder="Enter new task's name"
+                           value="{{task.name}}">
                 </div>
 
                 <div class="form-group">
                     <label for="task_descr">Name of the task</label>
-                    <input type="string" class="form-control" name="task_descr" value="{{task.description}}" placeholder="Enter new task's description">
+                    <input type="string" class="form-control" name="task_descr" value="{{task.description}}"
+                           placeholder="Enter new task's description">
                 </div>
 
                 <div class="form-group">
@@ -33,12 +35,14 @@
 
                 <div class="form-group">
                     <label for="start_date">Start date</label>
-                    <input type="date" class="form-control" name="start_date" value="{{task.formatted_start_date}}" placeholder="Enter start date">
+                    <input type="date" class="form-control" name="start_date" value="{{task.formatted_start_date}}"
+                           placeholder="Enter start date">
                 </div>
 
                 <div class="form-group">
                     <label for="due_date">Due date</label>
-                    <input type="date" class="form-control" name="due_date" value="{{task.formatted_due_date}}" placeholder="Enter due date">
+                    <input type="date" class="form-control" name="due_date" value="{{task.formatted_due_date}}"
+                           placeholder="Enter due date">
                 </div>
 
                 <div class="form-group">
@@ -68,6 +72,6 @@
 
 <script>
     function updateTextInput(val) {
-        document.getElementById('sliderValue').value=val;
+        document.getElementById('sliderValue').value = val;
     }
 </script>

@@ -1,8 +1,8 @@
 mongoose = require('mongoose');
 
 var projectSchema = new mongoose.Schema({
-    name : String,
-    members : [{type: mongoose.Schema.Types.ObjectId, ref: 'users'}]
+    name: String,
+    members: [{type: mongoose.Schema.Types.ObjectId, ref: 'users'}]
 
 });
 

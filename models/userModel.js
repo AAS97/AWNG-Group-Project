@@ -3,11 +3,11 @@
 var mongoose = require('mongoose');
 
 var userSchema = new mongoose.Schema({
-    name : String,
-    firstname : String,
-    login : String,
-    password : String,
-    role : [{type: String, enum: ['member', 'admin']}]
+    name: String,
+    firstname: String,
+    login: String,
+    password: String,
+    role: [{type: String, enum: ['member', 'admin']}]
 
 });
 

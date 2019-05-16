@@ -15,90 +15,102 @@
 
         </div>
 
-            <table id ="myTable" class="table table-hover">
-                <form>
-                    <thead>
-                    <tr>
-                        <th  scope="col">   Name
-                            <!--To Search by name task-->
-                            <input type="text" id="myInput" class = "form-control" onkeyup="filterColective(0,'myInput',1,'assignee',2,'status',3,'start_date',4,'due_date')" placeholder="Search Task.." title="Type in a name">
+        <table id="myTable" class="table table-hover">
+            <form>
+                <thead>
+                <tr>
+                    <th scope="col"> Name
+                        <!--To Search by name task-->
+                        <input type="text" id="myInput" class="form-control"
+                               onkeyup="filterColective(0,'myInput',1,'assignee',2,'status',3,'start_date',4,'due_date')"
+                               placeholder="Search Task.." title="Type in a name">
 
-                        </th>
-                        <th scope="col">  Assigned to
-                            <select class="form-control" name="assignee" id="assignee"  onchange="filterColective(0,'myInput',1,'assignee',2,'status',3,'start_date',4,'due_date')" value = "">
-                                <option></option>
-                                {{# each users}}
-                                    <option title = "{{this.firstname}} {{this.name}}">{{this.firstname}} {{this.name}}</option>
-                                {{/each}}
-                            </select>
+                    </th>
+                    <th scope="col"> Assigned to
+                        <select class="form-control" name="assignee" id="assignee"
+                                onchange="filterColective(0,'myInput',1,'assignee',2,'status',3,'start_date',4,'due_date')"
+                                value="">
+                            <option></option>
+                            {{# each users}}
+                                <option title="{{this.firstname}} {{this.name}}">{{this.firstname}} {{this.name}}</option>
+                            {{/each}}
+                        </select>
 
-                        </th>
-                        <th scope="col"> Status
-                            <!--To Search by Status-->
-                            <select class="form-control" name="status" id="status"  onchange="filterColective(0,'myInput',1,'assignee',2,'status',3,'start_date',4,'due_date')" value = "">
-                                <option></option>
-                                {{# each status}}
-                                    <option title = " {{this.name}}">{{this.name}}</option>
-                                {{/each}}
-                            </select>
+                    </th>
+                    <th scope="col"> Status
+                        <!--To Search by Status-->
+                        <select class="form-control" name="status" id="status"
+                                onchange="filterColective(0,'myInput',1,'assignee',2,'status',3,'start_date',4,'due_date')"
+                                value="">
+                            <option></option>
+                            {{# each status}}
+                                <option title=" {{this.name}}">{{this.name}}</option>
+                            {{/each}}
+                        </select>
 
-                        </th>
-                        <th scope="col">Start date
-                            <input type="date" class="form-control" name="start_date" id = "start_date" value=""
-                                   onkeyup="filterColective(0,'myInput',1,'assignee',2,'status',3,'start_date',4,'due_date')"  placeholder="Enter start date">
-                        </th>
-                        <th scope="col">Due date
-                            <input type="date" class="form-control" name="due_date" value="" id = "due_date"
-                                   onkeyup="filterColective(0,'myInput',1,'assignee',2,'status',3,'start_date',4,'due_date')" placeholder="Enter due date">
-                        </th>
+                    </th>
+                    <th scope="col">Start date
+                        <input type="date" class="form-control" name="start_date" id="start_date" value=""
+                               onkeyup="filterColective(0,'myInput',1,'assignee',2,'status',3,'start_date',4,'due_date')"
+                               placeholder="Enter start date">
+                    </th>
+                    <th scope="col">Due date
+                        <input type="date" class="form-control" name="due_date" value="" id="due_date"
+                               onkeyup="filterColective(0,'myInput',1,'assignee',2,'status',3,'start_date',4,'due_date')"
+                               placeholder="Enter due date">
+                    </th>
 
-                        <th> <input type="reset"  class="btn btn-primary btn-lg active" onclick="filterColective(0,'myInput',1,'assignee',2,'status',3,'start_date',4,'due_date')"  value="Reset" ></th>
+                    <th><input type="reset" class="btn btn-primary btn-lg active"
+                               onclick="filterColective(0,'myInput',1,'assignee',2,'status',3,'start_date',4,'due_date')"
+                               value="Reset"></th>
 
 
-                        <th scope="col">Edit task</th>
-                        <th scope="col">Delete task</th>
+                    <th scope="col">Edit task</th>
+                    <th scope="col">Delete task</th>
 
-                    </tr>
-
-                    </thead>
-
-                </form>
+                </tr>
 
                 </thead>
 
-                <tbody>
+            </form>
 
-                {{#each tasks}}
+            </thead>
 
-                    <tr>
+            <tbody>
 
-                        <td> <a href="/task/{{this._id}}">{{this.name}}</a></td>
-                        <td>{{this.assignee.firstname}} {{this.assignee.name}}</td>
-                        <td>{{this.status.name}}</td>
-                        <td>{{this.formatted_start_date}}</td>
-                        <td>{{this.formatted_due_date}}</td>
-                        <td></td>
-                        <td><a href="/task/{{this._id}}/modify"><i class="fas fa-edit"></i></a></td>
-                        <td><a href="/task/{{this._id}}/delete"><i class="fas fa-trash-alt"></i></a></td>
-                    </tr>
+            {{#each tasks}}
 
-                {{/each}}
+                <tr>
 
+                    <td><a href="/task/{{this._id}}">{{this.name}}</a></td>
+                    <td>{{this.assignee.firstname}} {{this.assignee.name}}</td>
+                    <td>{{this.status.name}}</td>
+                    <td>{{this.formatted_start_date}}</td>
+                    <td>{{this.formatted_due_date}}</td>
+                    <td></td>
+                    <td><a href="/task/{{this._id}}/modify"><i class="fas fa-edit"></i></a></td>
+                    <td><a href="/task/{{this._id}}/delete"><i class="fas fa-trash-alt"></i></a></td>
+                </tr>
 
-                </tbody>
-            </table>
-            <a href="/project/{{project._id}}/add" class="btn btn-primary btn-lg active" role="button" aria-pressed="true" style="margin-bottom : 10px">Add new task to the project</a>
-
+            {{/each}}
 
 
-<h2>Gantt Diagramm of {{project.name}}</h2>
-<div class="progress">
-    <div class="progress-bar" role="progressbar" style="width: {{project.progress}}%;" aria-valuenow="{{project.progress}}" aria-valuemin="0" aria-valuemax="100">{{project.progress}}%</div>
-</div>
-<div id="container"></div>
+            </tbody>
+        </table>
+        <a href="/project/{{project._id}}/add" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"
+           style="margin-bottom : 10px">Add new task to the project</a>
 
-<h2>BurnDown Chart of {{project.name}}</h2>
-<div id="burndown"></div>
+
+        <h2>Gantt Diagramm of {{project.name}}</h2>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width: {{project.progress}}%;"
+                 aria-valuenow="{{project.progress}}" aria-valuemin="0" aria-valuemax="100">{{project.progress}}%
+            </div>
+        </div>
+        <div id="container"></div>
+
+        <h2>BurnDown Chart of {{project.name}}</h2>
+        <div id="burndown"></div>
 
     </div>
 </div>
@@ -109,12 +121,10 @@
 <script>
     // Script permettant de créer un diagramme de Gantt
     Highcharts.ganttChart('container', {
-
         xAxis: {
             min: Date.UTC({{project.diagramm_start_date}}),
             max: Date.UTC({{project.diagramm_due_date}})
         },
-
         series: [{
             data: [ {{#each tasks}}
                 {name: "{{this.name}}",
@@ -129,76 +139,76 @@
 <script>
     // Script permettant de créer un diagramme d'avencement
     Highcharts.chart('burndown', {
-                    chart: {
-                        zoomType: 'x'
+        chart: {
+            zoomType: 'x'
+        },
+        title: {
+            text: ''
+        },
+        subtitle: {
+            text: document.ontouchstart === undefined ?
+                    'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+        },
+        xAxis: {
+            type: 'datetime'
+        },
+        yAxis: {
+            title: {
+                text: 'Remaining Effort'
+            },
+            min: 0,
+            max: 1,
+        },
+        legend: {
+            enabled: false
+        },
+        plotOptions: {
+            area: {
+                fillColor: {
+                    linearGradient: {
+                        x1: 0,
+                        y1: 0,
+                        x2: 0,
+                        y2: 1
                     },
-                    title: {
-                        text: ''
-                    },
-                    subtitle: {
-                        text: document.ontouchstart === undefined ?
-                                'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
-                    },
-                    xAxis: {
-                        type: 'datetime'
-                    },
-                    yAxis: {
-                        title: {
-                            text: 'Remaining Effort'
-                        },
-                        min: 0,
-                        max: 1,
-                    },
-                    legend: {
-                        enabled: false
-                    },
-                    plotOptions: {
-                        area: {
-                            fillColor: {
-                                linearGradient: {
-                                    x1: 0,
-                                    y1: 0,
-                                    x2: 0,
-                                    y2: 1
-                                },
-                                stops: [
-                                    [0, Highcharts.getOptions().colors[0]],
-                                    [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                                ]
-                            },
-                            marker: {
-                                radius: 2
-                            },
-                            lineWidth: 1,
-                            states: {
-                                hover: {
-                                    lineWidth: 1
-                                }
-                            },
-                            threshold: null
-                        },
-                        line :{
-                            marker: {
-                                radius: 10
-                            }
-                        }
-                    },
-
-                    series: [{
-                        type: 'area',
-                        name: 'Ideal Remaining Effort',
-                        data:  [{{#each project.datas}}
-                            {x: Date.UTC({{this.date}}),y: {{this.value}} },
-                        {{/each}}]
-                    },
-                        {
-                            name: 'Actual Remaining Effort',
-                            data:  [
-                                {x: Date.UTC({{project.today}}),y: {{project.progress}}*0.01},
-                            ]
-                        }
+                    stops: [
+                        [0, Highcharts.getOptions().colors[0]],
+                        [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
                     ]
-                })
+                },
+                marker: {
+                    radius: 2
+                },
+                lineWidth: 1,
+                states: {
+                    hover: {
+                        lineWidth: 1
+                    }
+                },
+                threshold: null
+            },
+            line: {
+                marker: {
+                    radius: 10
+                }
+            }
+        },
+
+        series: [{
+            type: 'area',
+            name: 'Ideal Remaining Effort',
+            data: [{{#each project.datas}}
+                {x: Date.UTC({{this.date}}), y: {{this.value}} },
+            {{/each}}]
+        },
+            {
+                name: 'Actual Remaining Effort',
+                data: [
+                    {x: Date.UTC({{project.today}}), y: {{project.progress}}* 0.01},
+                ]
+            }
+        ]
+    })
 </script>
 
 
